@@ -1,0 +1,8 @@
+{
+    email {$EMAIL_ADDRESS}
+}
+
+{$DOMAIN_NAME} {
+    reverse_proxy safeeating_back:8000
+    reverse_proxy safeeating_front:3000
+}

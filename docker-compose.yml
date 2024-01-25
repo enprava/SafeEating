@@ -1,6 +1,6 @@
 version: '3'
 networks: 
-  safe_eating:
+  safeeating_net:
     driver: bridge
 services:
   safeeating_db:
@@ -14,7 +14,8 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - safe_eating
+      - safeeating_net
+    
   safeeating_back:
     image: enprava/safeeatingbackend:latest
     volumes:
@@ -23,12 +24,42 @@ services:
     ports:
       - "8000:8000"
     networks:
-      - safe_eating
+      - safeeating_net
+    depends_on:
+      - safeeating_db
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  watchtower:
+    image: containrrr/watchtower:1.7.1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    environment:
+      - WATCHTOWER_LABEL_ENABLE=true
+    networks:
+      - safeeating_net
   safeeating_front:
     image: enprava/safeeatingfrontend:latest
     ports:
       - "3000:3000"
     networks:
-      - safe_eating 
+      - safeeating_net 
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  caddy:
+    image: caddy:latest
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMAIN_NAME=$DOMAIN_NAME
+      - EMAIL_ADDRESS=$EMAIL_ADDRESS
+    depends_on:
+      - safeeating_back
+      - safeeating_front
+    networks:
+      - safeeating_net
 volumes:
   db_data:
