@@ -2,6 +2,6 @@ FROM python:3.11.6-slim-bullseye
 RUN mkdir /code
 WORKDIR /code
 COPY . .
+RUN apt install -y gdal-bin libpq-dev
 RUN pip install -r requirements.txt
 RUN apt update
-RUN apt install -y gdal-bin libpq-dev
