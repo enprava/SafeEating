@@ -1,0 +1,19 @@
+version: '3'
+networks: 
+  safe_eating_dev:
+    driver: bridge
+services:
+  trackwine_db:
+    image: postgis/postgis:16-3.4-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
+    networks:
+      - safe_eating_dev
+volumes:
+  db_data:
