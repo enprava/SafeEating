@@ -15,6 +15,7 @@ services:
       - "5432:5432"
     networks:
       - safe_eating
+    
   safeeating_back:
     image: enprava/safeeatingbackend:latest
     volumes:
@@ -24,11 +25,22 @@ services:
       - "8000:8000"
     networks:
       - safe_eating
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  watchtower:
+    image: containrrr/watchtower:1.7.1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+    environment:
+      - WATCHTOWER_LABEL_ENABLE=true
   safeeating_front:
     image: enprava/safeeatingfrontend:latest
     ports:
       - "3000:3000"
     networks:
       - safe_eating 
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
 volumes:
   db_data:
