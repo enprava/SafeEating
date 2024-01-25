@@ -3,7 +3,7 @@ networks:
   safe_eating_dev:
     driver: bridge
 services:
-  trackwine_db:
+  safeeating_db:
     image: postgis/postgis:16-3.4-alpine
     volumes:
       - db_data:/var/lib/postgresql/data
@@ -15,5 +15,6 @@ services:
       - "5432:5432"
     networks:
       - safe_eating_dev
+  
 volumes:
   db_data:

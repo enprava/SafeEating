@@ -1,0 +1,34 @@
+version: '3'
+networks: 
+  safe_eating:
+    driver: bridge
+services:
+  safeeating_db:
+    image: postgis/postgis:16-3.4-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    ports:
+      - "5432:5432"
+    networks:
+      - safe_eating
+  safeeating_back:
+    image: enprava/safeeatingbackend:latest
+    volumes:
+      - .env:/code/.env
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    networks:
+      - safe_eating
+  safeeating_front:
+    image: enprava/safeeatingfrontend:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - safe_eating 
+volumes:
+  db_data:

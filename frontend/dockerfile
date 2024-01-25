@@ -1,0 +1,8 @@
+FROM node:21.6.0-bullseye
+RUN mkdir /code
+WORKDIR /code
+COPY . .
+RUN npm i
+RUN npm i --global serve
+RUN npm run build
+CMD ["serve", "-s", "./dist"]

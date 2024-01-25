@@ -80,16 +80,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'NAME': config.get('POSTGRES_DB'),
-        # "USER": config.get("POSTGRES_USER"),
-        # "PASSWORD": config.get("POSTGRES_PASSWORD"),
-        # "HOST": config.get('DB_HOST'),
-        # "PORT": config.get('DB_PORT'),
-        'NAME': 'safeeating',
-        "USER": 'safeeating',
-        "PASSWORD": 'safeeating',
-        "HOST": 'localhost',
-        "PORT": '5432',
+        'NAME': config.get('POSTGRES_DB'),
+        "USER": config.get("POSTGRES_USER"),
+        "PASSWORD": config.get("POSTGRES_PASSWORD"),
+        "HOST": config.get('DB_HOST'),
+        "PORT": config.get('DB_PORT'),
     }
 }
 
