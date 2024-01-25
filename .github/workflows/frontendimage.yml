@@ -1,8 +1,8 @@
 name: Frontend build and push
 on:
   push:
-    # branches:
-    #   - "master"
+    branches:
+      - "master"
 jobs:
   docker:
     runs-on: ubuntu-latest
