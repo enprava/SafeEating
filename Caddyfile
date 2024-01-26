@@ -2,10 +2,10 @@
     email {$EMAIL_ADDRESS}
 }
 {$DOMAIN_NAME} {
-    route /* {
+    handle /* {
         reverse_proxy safeeating_front:3000
     }
-    route /api/*1 {
+    handle /api/* {
         reverse_proxy safeeating_back:8000
     }
 }
