@@ -1,8 +1,11 @@
 {
     email {$EMAIL_ADDRESS}
 }
-
 {$DOMAIN_NAME} {
-    reverse_proxy safeeating_back:8000
-    reverse_proxy safeeating_front:3000
+    route /* {
+        reverse_proxy safeeating_front:3000
+    }
+    route /api/*1 {
+        reverse_proxy safeeating_back:8000
+    }
 }

@@ -5,4 +5,6 @@ COPY . .
 RUN npm i
 RUN npm i --global serve
 RUN npm run build
+#Maybe we will remove this in future releases
+RUN ls | grep -xv dist | xargs rm -rf 
 CMD ["serve", "-s", "./dist"]
