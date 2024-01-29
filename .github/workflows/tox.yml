@@ -12,14 +12,19 @@ jobs:
       matrix:
         python-version: [3.11.6]
     services:
-      safeeating_db:
+      postgres:
         image: postgis/postgis:16-3.4-alpine
         env:
-          POSTGRES_USER: safeeating
-          POSTGRES_DB: safeeating
-          POSTGRES_PASSWORD: safeeating
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432/tcp
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v3
@@ -32,4 +37,4 @@ jobs:
       - name: Install tox
         run: pip install tox==4.12.1
       - name: Run tox
-        run: touch .env & echo "POSTGRES_DB=safeeating" >> .env & echo "POSTGRES_USER=safeeating" >> .env & echo "POSTGRES_PASSWORD=safeeating" >> .env & echo "DB_HOST=safeeating_db" >> .env & echo "DB_PORT=5432" >> .env & tox
+        run: touch .env & echo "POSTGRES_DB=postgres" >> .env & echo "POSTGRES_USER=postgres" >> .env & echo "POSTGRES_PASSWORD=postgres" >> .env & echo "DB_HOST=postgres" >> .env & echo "DB_PORT=5432" >> .env & tox
