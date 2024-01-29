@@ -1,0 +1,42 @@
+name: Tox
+
+on: [push, pull_request]
+
+jobs:
+  tox:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    strategy:
+      matrix:
+        python-version: [3.11.6]
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run apt update
+        run: sudo apt-get update
+      - name: Install gdal library
+        run: sudo apt-get install -y gdal-bin
+      - name: Install tox
+        run: pip install tox==4.12.1
+      - name: Run tox
+        run: touch .env & echo "POSTGRES_DB=postgres" >> .env & echo "POSTGRES_USER=postgres" >> .env & echo "POSTGRES_PASSWORD=postgres" >> .env & echo "DB_HOST=localhost" >> .env & echo "DB_PORT=5432" >> .env & tox
