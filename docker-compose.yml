@@ -48,7 +48,7 @@ services:
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
   caddy:
-    image: caddy:latest
+    image: enprava/caddy:latest
     volumes:
       - ./static:/static
     ports:
