@@ -1,0 +1,16 @@
+{
+    email {$EMAIL_ADDRESS}
+}
+{$DOMAIN_NAME} {
+    handle /* {
+        reverse_proxy safeeating_front:3000
+    }
+
+    handle /api* {
+        reverse_proxy safeeating_back:8000
+    }
+    handle_path /api/static/* {
+        root * /static
+        file_server
+    }
+}
