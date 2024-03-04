@@ -5,13 +5,6 @@ on:
   push:
     branches:
       - master
-env:
-  POSTGRES_DB: postgres
-  POSTGRES_USER: postgres
-  POSTGRES_PASSWORD: postgres
-  DB_HOST: localhost
-  DB_PORT: 5432
-  DEPLOY: True
 
 jobs:
   tox:
@@ -26,9 +19,9 @@ jobs:
       postgres:
         image: postgis/postgis:16-3.4-alpine
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: safeeating
+          POSTGRES_DB: safeeating
+          POSTGRES_PASSWORD: safeeating
         ports:
           - 5432:5432
         options: >-
