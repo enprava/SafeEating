@@ -11,10 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
-from dotenv import dotenv_values
-
-config = dotenv_values(".env")
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,8 +26,7 @@ SECRET_KEY = "django-insecure-5piwzs2uu9st)esjv4+!8g&kv+3tzukql6%5(v+@%l(e5t-156
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [config.get("DOMAIN_NAME")]
-
+ALLOWED_HOSTS = ["localhost"]
 
 # Application definition
 
@@ -44,7 +40,10 @@ INSTALLED_APPS = [
     "django.contrib.gis",
     "rest_framework",
     "drf_yasg",
-    "menu",
+    "establishment",
+    "user",
+    "adaptation",
+    "rating",
 ]
 
 MIDDLEWARE = [
@@ -84,14 +83,13 @@ WSGI_APPLICATION = "backend.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.contrib.gis.db.backends.postgis",
-        "NAME": config.get("POSTGRES_DB"),
-        "USER": config.get("POSTGRES_USER"),
-        "PASSWORD": config.get("POSTGRES_PASSWORD"),
-        "HOST": config.get("DB_HOST"),
-        "PORT": config.get("DB_PORT"),
+        "NAME": "safeeating",
+        "USER": "safeeating",
+        "PASSWORD": "safeeating",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -128,9 +126,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "api/static/"
-STATIC_ROOT ="static"
+STATIC_ROOT = "static"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+#Deploy settings
+
+if os.getenv("DEPLOY"):
+    ALLOWED_HOSTS = [os.getenv("DOMAIN_NAME")]
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.postgis",
+            "NAME": os.getenv("POSTGRES_DB"),
+            "USER": os.getenv("POSTGRES_USER"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": os.getenv("DB_PORT"),
+        }
+    }

@@ -1,6 +1,10 @@
 name: Tox
 
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   tox:
@@ -15,9 +19,9 @@ jobs:
       postgres:
         image: postgis/postgis:16-3.4-alpine
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: safeeating
+          POSTGRES_DB: safeeating
+          POSTGRES_PASSWORD: safeeating
         ports:
           - 5432:5432
         options: >-
@@ -39,4 +43,4 @@ jobs:
       - name: Install tox
         run: pip install tox==4.12.1
       - name: Run tox
-        run: touch .env & echo "POSTGRES_DB=postgres" >> .env & echo "POSTGRES_USER=postgres" >> .env & echo "POSTGRES_PASSWORD=postgres" >> .env & echo "DB_HOST=localhost" >> .env & echo "DB_PORT=5432" >> .env & tox
+        run: tox
