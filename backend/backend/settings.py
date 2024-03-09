@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     "rating",
 ]
 
+SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH":  False
+}
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -135,6 +139,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 #Deploy settings
+
 
 if os.getenv("DEPLOY"):
     ALLOWED_HOSTS = [os.getenv("DOMAIN_NAME")]
