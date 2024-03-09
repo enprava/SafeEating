@@ -17,9 +17,8 @@ services:
       - safeeating_net
     
   safeeating_back:
-    image: enprava/safeeatingbackend:latest
+    build: ./backend
     volumes:
-      - .env:/code/.env
       - ./static/:/code/static/
     command: python manage.py runserver 0.0.0.0:8000
     environment:
@@ -36,39 +35,32 @@ services:
       - safeeating_net
     depends_on:
       - safeeating_db
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-  # watchtower:
-  #   image: containrrr/watchtower:1.7.1
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   command: --interval 30
-  #   environment:
-  #     - WATCHTOWER_LABEL_ENABLE=true
-  #   networks:
-  #     - safeeating_net
   safeeating_front:
-    image: enprava/safeeatingfrontend:latest
+    build: ./frontend
     ports:
       - "3000:3000"
     networks:
       - safeeating_net 
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-  # caddy:
-  #   image: enprava/caddy:latest
-  #   volumes:
-  #     - ./static:/static
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   environment:
-  #     - DOMAIN_NAME=$DOMAIN_NAME
-  #     - EMAIL_ADDRESS=$EMAIL_ADDRESS
-  #   depends_on:
-  #     - safeeating_back
-  #     - safeeating_front
-  #   networks:
-  #     - safeeating_net
+  fileserver:
+    build: ./nginx
+    volumes:
+      - ./static:/static
+      - ./media:/media
+    depends_on:
+      - safeeating_back
+    networks:
+      - safeeating_net
+  nginx:
+    image: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - safeeating_back
+      - safeeating_front
+      - fileserver
+    ports:
+      - "80:80"
+    networks:
+      - safeeating_net
 volumes:
   db_data:
