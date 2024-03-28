@@ -1,2 +1,6 @@
+from django.contrib import admin
 
-# Register your models here.
+from .models import Establishment, EstablishmentImage
+
+admin.site.register(Establishment)
+admin.site.register(EstablishmentImage)

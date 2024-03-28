@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "rest_framework",
+    "rest_framework_gis",
+    "rest_framework.authtoken",
     "drf_yasg",
     "establishment",
     "user",
@@ -46,9 +48,18 @@ INSTALLED_APPS = [
     "rating",
 ]
 
-SWAGGER_SETTINGS = {
-    "USE_SESSION_AUTH":  False
+# AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    # "DEFAULT_PERMISSION_CLASSES": [
+    #     "rest_framework.permissions.AllowAny",
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
+
+SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -100,7 +111,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME`": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
@@ -132,14 +143,16 @@ USE_TZ = True
 STATIC_URL = "api/static/"
 STATIC_ROOT = "static"
 
+MEDIA_URL = "api/media/"
+MEDIA_ROOT = "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+APPEND_SLASH = False
 
-#Deploy settings
-
+# Deploy settings
 
 if os.getenv("DEPLOY"):
     ALLOWED_HOSTS = [os.getenv("DOMAIN_NAME")]

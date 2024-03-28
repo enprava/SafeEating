@@ -1,4 +1,3 @@
-version: '3'
 networks: 
   safe_eating_dev:
     driver: bridge
