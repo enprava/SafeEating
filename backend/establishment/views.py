@@ -6,10 +6,11 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework import permissions
 
-class EstablishmentMapCreateView(generics.ListAPIView):
+class EstablishmentMapView(generics.ListAPIView):
     queryset = Establishment.objects.all()
     serializer_class = EstablishmentGeoSerializer
     renderer_classes = [JSONRenderer]
+    pagination_class = None
 
 class EstablishmentListView(generics.ListAPIView):
     queryset = Establishment.objects.all()
@@ -25,6 +26,7 @@ class EstablishmentCreateView(generics.CreateAPIView):
 
 class EstablishmentImageUploadView(views.APIView):
     parser_classes = [MultiPartParser]
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
     def post(self, request, pk):
         image = request.FILES['image']
@@ -32,6 +34,6 @@ class EstablishmentImageUploadView(views.APIView):
         extension = image.name.split(".")[-1]
         filename = f"{establishment.establishmentimage_set.all().count()}.{extension}"
         establishment_image = EstablishmentImage.objects.create(establishment=establishment)
-        establishment_image.image.save(filename, image.file)
-        establishment_image_serializer = EstablishmentImageSerializer(data=establishment_image)
-        return Response(establishment_image_serializer.data)
+        establishment_image.url.save(filename, image.file)
+        serializer = EstablishmentSerializer(establishment)
+        return Response(serializer.data)

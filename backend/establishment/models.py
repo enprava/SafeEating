@@ -23,7 +23,7 @@ class EstablishmentImage(models.Model):
             str(self.establishment.pk),
             filename
         )
-    image = models.ImageField(upload_to=upload_path)
+    url = models.ImageField(upload_to=upload_path)
     
     def __str__(self):
-        return self.image.name
+        return self.url.name

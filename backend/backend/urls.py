@@ -38,7 +38,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path("api/admin", admin.site.urls),
+    path("api/admin/", admin.site.urls),
     path(
         "api/swagger<format>",
         schema_view.without_ui(cache_timeout=0),
@@ -60,4 +60,5 @@ urlpatterns = [
     path("api/establishment", include("establishment.urls")),
     path("api/adaptation", include("adaptation.urls")),
     path("api/user", include("user.urls")),
+    path("api/rating", include("rating.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

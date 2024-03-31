@@ -1,11 +1,11 @@
 from rest_framework import generics, views
 from django.contrib.auth.models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserAdaptationsSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import MultiPartParser
-from .models import UserPic
+from .models import UserPic, UserAdaptations
 from rest_framework.response import Response
-from .permissions import IsUserOwner
+from .permissions import IsOwner
 from rest_framework import permissions
 
 class UserCreateView(generics.CreateAPIView):
@@ -13,10 +13,15 @@ class UserCreateView(generics.CreateAPIView):
     serializer_class = UserSerializer
     renderer_classes = [JSONRenderer]
 
+class UserRetrieveView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    renderer_classes = [JSONRenderer]
+    
 class UserPicUploadView(views.APIView):
     parser_classes = [MultiPartParser]
     queryset = UserPic.objects.all()
-    permission_classes = [permissions.IsAuthenticated, IsUserOwner]
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
 
     def post(self, request, pk):
         image = request.FILES['image']
@@ -26,3 +31,8 @@ class UserPicUploadView(views.APIView):
         pic.pic.save(filename, image.file)
         serializer = UserSerializer(pic.user)
         return Response(serializer.data)
+
+class UserAdaptationsUploadView(generics.CreateAPIView):
+    queryset = UserAdaptations.objects.all()
+    serializer_class = UserAdaptationsSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]

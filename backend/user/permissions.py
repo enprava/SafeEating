@@ -3,7 +3,7 @@ from rest_framework import permissions
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-class IsUserOwner(permissions.BasePermission):
+class IsOwner(permissions.BasePermission):
     """
         Object level permission to Upload Pic view
     """

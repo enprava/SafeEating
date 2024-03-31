@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import os
+from adaptation.models import Adaptation
 
 class UserPic(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
@@ -10,4 +11,13 @@ class UserPic(models.Model):
             str(self.user.pk),
             filename
         )
-    pic = models.ImageField(upload_to=upload_path)
+    url = models.ImageField(upload_to=upload_path)
+
+
+class UserAdaptations(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    adaptations = models.ManyToManyField(Adaptation)
+
+
+    def __str__(self):
+        return f"{self.user.username} Adaptations"
