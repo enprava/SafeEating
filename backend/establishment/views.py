@@ -1,6 +1,6 @@
 from rest_framework import generics, views
 from .models import Establishment, EstablishmentImage
-from .serializers import EstablishmentGeoSerializer, EstablishmentSerializer, EstablishmentImageSerializer
+from .serializers import EstablishmentGeoSerializer, EstablishmentSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response

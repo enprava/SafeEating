@@ -1,11 +1,10 @@
 from rest_framework import generics, views
 from .models import Rating, RatingImage
 from rest_framework.renderers import JSONRenderer
-from .serializers import RatingSerializer, RatingImageSerializer
+from .serializers import RatingSerializer
 from rest_framework.parsers import MultiPartParser
 from rest_framework import permissions
 from rest_framework.response import Response
-from .permissions import IsOwner
 
 
 class RatingCreateListView(generics.ListCreateAPIView):
