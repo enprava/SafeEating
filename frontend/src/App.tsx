@@ -3,7 +3,7 @@
 // Next like page routing
 //
 
-import React from "react";
+import React, { useContext, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 interface Page {
@@ -41,7 +41,14 @@ const router = createBrowserRouter(
   }))
 );
 
+
 const App: React.FC = () => {
+  const token = localStorage.getItem("token");
+  const user = localStorage.getItem("user")
+  if (token && user) {
+    sessionStorage.setItem("token", token);
+    sessionStorage.setItem("user", user);
+  }
   return <RouterProvider router={router} />;
 };
 

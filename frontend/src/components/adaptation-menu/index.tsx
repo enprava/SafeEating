@@ -43,7 +43,7 @@ function AdaptationMenu() {
     }
 
     return (
-        <div className="mx-2 mt-3 rounded-xl bg-white border rounded-xl border-solid border-border grid grid-cols-4">
+        <div className="mx-2 mt-2 rounded-xl bg-white border rounded-xl border-solid border-border grid grid-cols-4">
             {showData()}
         </div>
     );
