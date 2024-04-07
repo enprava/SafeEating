@@ -1,3 +1,20 @@
+@import url("maplibre-gl/dist/maplibre-gl.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    @media (min-width: 448px) {
+        display: flex;
+        justify-content: center;
+        background: #000;
+    }
+}
+
+#root{
+    @media (min-width: 448px){
+        border-width: 2px;
+    }
+}

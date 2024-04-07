@@ -14,7 +14,15 @@ export default {
       "selected": "#D1D1D1",
       "white": colors.white,
       "green": "#16a34a",
+      "loading": "#a3a3a3",
+      "transparent": colors.transparent,
+      "star": "#ffc107",
+      "text-gray": "#737373",
+      "no-veggie": "#b9c1c",
+      "like": "#dc2626",
     }
   },
-  plugins: [],
+  plugins: [
+    require('@headlessui/tailwindcss'),
+  ],
 }

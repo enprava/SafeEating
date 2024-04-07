@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_gis",
     "rest_framework.authtoken",
+    "corsheaders",
     "drf_yasg",
     "establishment",
     "user",
@@ -56,6 +57,8 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 SWAGGER_SETTINGS = {"USE_SESSION_AUTH": False}
 
 MIDDLEWARE = [
@@ -66,6 +69,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"

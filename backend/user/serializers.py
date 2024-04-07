@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     def get_pic(self, user):
         userpic, created = UserPic.objects.get_or_create(user=user)
+        print(userpic.url.url)
         serializer = UserPicSerializer(user.userpic)
         return serializer.data
 

@@ -11,7 +11,7 @@ class UserPic(models.Model):
             str(self.user.pk),
             filename
         )
-    url = models.ImageField(upload_to=upload_path)
+    url = models.ImageField(upload_to=upload_path, null=True)
 
 
 class UserAdaptations(models.Model):

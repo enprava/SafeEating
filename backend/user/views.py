@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser
 from .models import UserPic, UserAdaptations
 from rest_framework.response import Response
 from .permissions import IsOwner
+from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 
 class UserCreateView(generics.CreateAPIView):
@@ -25,10 +26,11 @@ class UserPicUploadView(views.APIView):
 
     def post(self, request, pk):
         image = request.FILES['image']
-        pic, created = UserPic.objects.get_or_create(user__pk=pk)
+        user = get_object_or_404(User, pk=pk)
+        pic, created = UserPic.objects.get_or_create(user=user)
         extension = image.name.split(".")[-1]
         filename = f"pic.{extension}"
-        pic.pic.save(filename, image.file)
+        pic.url.save(filename, image.file)
         serializer = UserSerializer(pic.user)
         return Response(serializer.data)
 

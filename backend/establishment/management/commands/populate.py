@@ -43,9 +43,35 @@ class Command(BaseCommand):
             "Vegetariano",
             "Vegano",
         ]
+        adaptation_map = {
+            "Gluten": "gluten.png",
+            "Crustáceos": "crustaceos.png",
+            "Huevos": "huevos.png",
+            "Pescado": "pescado.png",
+            "Cacahuetes": "cacahuetes.png",
+            "Soja": "soja.png",
+            "Lácteos": "lacteos.png",
+            "Frutos con cáscara": "frutosconcascara.png",
+            "Apio": "apio.png",
+            "Mostaza": "mostaza.png",
+            "Sésamo": "sesamo.png",
+            "Sulfitos": "sulfitos.png",
+            "Altramuces": "altramuces.png",
+            "Moluscos": "moluscos.png",
+            "Vegetariano": "vegetariano.png",
+            "Vegano": "vegano.png",
+        }
         adaptations = []
         for adapt in adaptations_name:
             adaptation = Adaptation.objects.create(name=adapt)
+            with open(
+                os.path.join(
+                    "establishment/management/factoryimages/adaptations",
+                    adaptation_map[adapt],
+                ),
+                "rb",
+            ) as file:
+                adaptation.url.save(adaptation_map[adapt], file)
             adaptations.append(adaptation)
         self.stdout.write("Adaptations created")
 
@@ -77,7 +103,9 @@ class Command(BaseCommand):
         for _ in range(1000):
             establishment = EstablishmentFactory()
             establishments.append(establishment)
-
+            n_adaptation = random.randint(0, 16)
+            for _ in range(n_adaptation):
+                establishment.adaptation.add(random.choice(adaptations))
             n_images = random.randint(1, 5)
 
             used_images = []
