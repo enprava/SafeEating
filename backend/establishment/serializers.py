@@ -26,10 +26,10 @@ class EstablishmentGeoSerializer(geoserializers.GeoFeatureModelSerializer):
         return 0
 
     def get_adaptations(self, establishment):
-        adaptations_serializer = AdaptationSerializer(
+        serializer = AdaptationSerializer(
             establishment.adaptation, many=True
         )
-        return adaptations_serializer.data
+        return serializer.data
 
     class Meta:
         model = Establishment
@@ -70,10 +70,10 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         return 0
 
     def get_adaptations(self, establishment):
-        adaptations_serializer = AdaptationSerializer(
+        serializer = AdaptationSerializer(
             establishment.adaptation, many=True
         )
-        return adaptations_serializer.data
+        return serializer.data
 
     class Meta:
         model = Establishment

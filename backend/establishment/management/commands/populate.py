@@ -138,11 +138,14 @@ class Command(BaseCommand):
             creator = random.choice(users)
             rated_establishment = random.choice(establishments)
             rating = RatingFactory(user=creator, establishment=rated_establishment)
+            n_adaptation = random.randint(0, 16)
+            for _ in range(n_adaptation):
+                rating.adaptation.add(random.choice(adaptations))
             ratings.append(rating)
 
             prob = random.randint(0, 9)
 
-            if not bool(prob):
+            if bool(prob):
                 rating_image = RatingImage.objects.create(rating=rating)
                 image = random.choice(rating_images_filenames)
                 extension = image.split(".")[-1]
@@ -154,6 +157,7 @@ class Command(BaseCommand):
                         ),
                         "rb",
                     ) as file:
-                        rating_image.url.save(f"{rating_image.pk}.{extension}", file)
+                        rating_image.url.save(f"{rating_image.pk}.{extension}", file
+                        )
 
         self.stdout.write("Ratings created")

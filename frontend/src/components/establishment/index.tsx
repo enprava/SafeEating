@@ -84,7 +84,7 @@ function Establishment({ name, address, website, adaptations, images, location, 
                 <div className=" mx-2  mt-1 flex flex-col justify-around">
                     <p className="text-xs font-semibold truncate">{name}</p>
                     <div className="flex items-end">
-                        <StarIcon className="h-4 text-star mr-2" />
+                        <StarIcon className="h-4 text-star mr-2u" />
                         <p className="text-xs/3">{stars}</p>
                     </div>
                     <div className="flex">

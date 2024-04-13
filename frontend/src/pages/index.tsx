@@ -4,7 +4,7 @@ import { GlobeEuropeAfricaIcon } from "@heroicons/react/24/solid";
 import locationPin from "@/assets/location-dot-solid.svg"
 import Loading from "@/components/loading";
 import URL_API from "@/utils/url-api";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import Establishment from "@/components/establishment";
 import Footer from "@/components/footer";
 
@@ -14,6 +14,9 @@ export default function () {
     
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user"))
         window.location.href = "/login";
+
+    if (!sessionStorage.getItem("location"))
+        window.location.href = "/location";
 
     function getData() {
         fetch(URL_API + establishmentUrl)

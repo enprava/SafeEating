@@ -1,0 +1,178 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: enprava/safeeatingbackend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          resources: 
+            requests:
+              memory:  "0.5Gi"
+              cpu: "64m"
+            limits:
+              memory: "1Gi"
+              cpu: "192m"
+          readinessProbe:
+            httpGet:
+              path: /api
+              port: 8000
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
+          volumeMounts:
+          - name: backend-static
+            mountPath: /code/static
+          - name: backend-media
+            mountPath: /code/media
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: DB_PORT
+            - name: DOMAIN_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: config
+                  key: DOMAIN_NAME
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: POSTGRES_PASSWORD
+            - name: DEPLOY
+              value: "True"           
+      volumes:
+        - name: backend-static
+          persistentVolumeClaim:
+            claimName: backend-static
+        - name: backend-media
+          persistentVolumeClaim:
+            claimName: backend-media
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: NodePort
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    app: backend
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backend-static
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backend-media
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+      
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fileserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fileserver
+  template:
+    metadata:
+      labels:
+        app: fileserver
+    spec:
+      containers:
+      - name: fileserver
+        image: enprava/safeeatingnginx
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        resources: 
+          requests:
+            memory:  "0.5Gi"
+            cpu: "64m"
+          limits:
+            memory: "1Gi"
+            cpu: "192m"
+        # readinessProbe:
+        #   httpGet:
+        #     path: /api/static/admin/css/base.css
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   timeoutSeconds: 5
+        volumeMounts:
+        - name: backend-static
+          mountPath: /static
+        - name: backend-media
+          mountPath: /media     
+      volumes:
+        - name: backend-static
+          persistentVolumeClaim:
+            claimName: backend-static
+        - name: backend-media
+          persistentVolumeClaim:
+            claimName: backend-media
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fileserver
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: fileserver

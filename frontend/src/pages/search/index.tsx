@@ -5,7 +5,7 @@ import { useState } from "react";
 import URL_API from "@/utils/url-api";
 import Loading from "@/components/loading";
 import Establishment from "@/components/establishment";
-import MapComponent from "@/components/map";
+import MapComponent from "@/components/maps/establishment";
 
 export default function () {
     const establishmentUrl: string = "/establishment";
@@ -13,9 +13,14 @@ export default function () {
     const [establishmentData, setEstablishmentData]: any | {} = useState(null);
     const [mapData, setMapData]: any | {} = useState(null)
     const [activeTab, setActiveTad]: any | {} = useState(0);
+    const [location, setLocation] = useState(sessionStorage.getItem('location'))
+    const [radius, setRadius] = useState(2000);
 
     function getMapData() {
-        fetch(URL_API + mapUrl)
+        console.log(location)
+        const lon: any = location?.split(',')[0] ? location?.split(',')[0]: "-5.987375667032342";
+        const lat: any = location?.split(',')[1] ? location?.split(',')[1]: "37.3930443446";
+        fetch(`${URL_API}${mapUrl}/${lon},${lat},${radius}`)
             .then((response) => response.json())
             .then((data) => setMapData(data));
 
