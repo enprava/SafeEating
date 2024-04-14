@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, HeartIcon, UserIcon, HomeIcon, HomeModernIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon, HeartIcon, UserIcon, HomeIcon } from "@heroicons/react/24/outline";
 
 interface args {
     className?: string

@@ -13,7 +13,7 @@ interface args {
     ratingImgs: { id: number, url: string }[],
 }
 
-function Rating({ userImg, firstName, lastName, intolerances, veggie, stars, body, ratingImgs }: args) {
+function Rating({ userImg, firstName, lastName, stars, body, ratingImgs }: args) {
     function showStars() {
         if (stars === 0)
             return <StarIconOutline className="h-4 text-star" />

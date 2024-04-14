@@ -13,8 +13,10 @@ export default function () {
     const [establishmentData, setEstablishmentData]: any | {} = useState(null);
     const [mapData, setMapData]: any | {} = useState(null)
     const [activeTab, setActiveTad]: any | {} = useState(0);
-    const [location, setLocation] = useState(sessionStorage.getItem('location'))
-    const [radius, setRadius] = useState(2000);
+    // const [location, setLocation] = useState(sessionStorage.getItem('location'))
+    // const [radius, setRadius] = useState(2000);
+    const location = sessionStorage.getItem("location");
+    const radius = 2000;
 
     function getMapData() {
         console.log(location)

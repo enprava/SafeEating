@@ -1,4 +1,3 @@
-version: '3'
 networks: 
   safeeating_net:
     driver: bridge
@@ -11,8 +10,6 @@ services:
       - POSTGRES_DB=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-    ports:
-      - "5432:5432"
     networks:
       - safeeating_net
     
@@ -20,7 +17,7 @@ services:
     build: ./backend
     volumes:
       - ./static/:/code/static/
-    command: python manage.py runserver 0.0.0.0:8000
+      - ./media/:/code/media/
     environment:
       - POSTGRES_DB=$POSTGRES_DB
       - POSTGRES_USER=$POSTGRES_USER
@@ -29,16 +26,16 @@ services:
       - DB_PORT=$DB_PORT
       - DOMAIN_NAME=$DOMAIN_NAME
       - DEPLOY=True
-    ports:
-      - "8000:8000"
     networks:
       - safeeating_net
     depends_on:
       - safeeating_db
   safeeating_front:
-    build: ./frontend
-    ports:
-      - "3000:3000"
+    build: 
+      context: ./frontend
+      args:
+        - VITE_ESTABLISHMENT_API=http://localhost/api
+        - VITE_MEDIA_URL=http://localhost
     networks:
       - safeeating_net 
   fileserver:

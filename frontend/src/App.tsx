@@ -3,7 +3,7 @@
 // Next like page routing
 //
 
-import React, { useContext, useState } from "react";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 interface Page {

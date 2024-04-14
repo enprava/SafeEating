@@ -15,9 +15,9 @@ export type establishmentArgs = {
     className?: string
 }
 
-function Establishment({ name, address, website, adaptations, images, location, stars, liked = false , className=""}: establishmentArgs) {
+function Establishment({ name, address, adaptations, images, location, stars, liked = false , className=""}: establishmentArgs) {
     const [isLiked, setIsLiked] = useState(liked);
-
+    
     function getVeggies() {
         var vegen = null;
         for (const adapt of adaptations) {

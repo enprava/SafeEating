@@ -1,5 +1,4 @@
 import { CameraIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import URL_API from "@/utils/url-api";
 
@@ -23,7 +22,7 @@ function Photo({ fistName, lastName, img, email }: args) {
         // console.log(image);
         const formData = new FormData()
         formData.append("image", image);
-        const response = await fetch(URL_API + `/user/${user}/upload-pic`, {
+        await fetch(URL_API + `/user/${user}/upload-pic`, {
             method: 'POST',
             body: formData,
             headers: {
