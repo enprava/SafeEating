@@ -2,9 +2,19 @@ FROM node:21.6.0-bullseye
 RUN mkdir /code
 WORKDIR /code
 COPY . .
+RUN rm .env
+
+ARG VITE_ESTABLISHMENT_API=http://localhost/api
+ARG VITE_MEDIA_URL=http://localhost
+
+ENV VITE_ESTABLISHMENT_API ${VITE_ESTABLISHMENT_API}
+ENV VITE_MEDIA_URL ${VITE_MEDIA_URL}
+
+RUN echo $VITE_ESTABLISHMENT_API
 RUN npm i
 RUN npm i --global serve
 RUN npm run build
-#Maybe we will remove this in future releases
+
 RUN ls | grep -xv dist | xargs rm -rf 
+
 CMD ["serve", "-s", "./dist"]

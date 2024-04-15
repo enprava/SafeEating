@@ -1,6 +1,9 @@
 django==5.0.1
 psycopg2-binary==2.9.9
 djangorestframework==3.14.0
+djangorestframework-gis==1.0
 drf-yasg==1.21.7
 pillow==10.2.0
+django-cors-headers==4.3.1
+factory-boy==3.3.0
 # You may need to install gdal library to run the project

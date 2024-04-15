@@ -1,2 +1,5 @@
+from django.contrib import admin
+from .models import UserPic, UserAdaptations
 
-# Register your models here.
+admin.site.register(UserPic)
+admin.site.register(UserAdaptations)

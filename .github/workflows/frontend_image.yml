@@ -25,3 +25,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: enprava/safeeatingfrontend:latest
+          build-args: |
+            VITE_ESTABLISHMENT_API =http://safeeating.xyz/api |
+            VITE_MEDIA_URL =http://safeeating.xyz

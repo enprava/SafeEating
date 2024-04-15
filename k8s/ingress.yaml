@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: safeeating.xyz
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: frontend
+              port:
+                number: 3000
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 8000
+        - path: /api/static
+          pathType: Prefix
+          backend:
+            service:
+              name: fileserver
+              port:
+                number: 80
+        - path: /api/media
+          pathType: Prefix
+          backend:
+            service:
+              name: fileserver
+              port:
+                number: 80
+            
