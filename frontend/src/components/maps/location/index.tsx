@@ -48,7 +48,7 @@ function LocationComponent({ lat, lon }: args) {
                 initialViewState={{
                     longitude: -5,
                     latitude: 37,
-                    zoom: 7
+                    zoom: 4
                 }}
                 style={{ height: getMapHeight() }}
                 mapStyle="https://api.maptiler.com/maps/streets-v2/style.json?key=V4dZUoisY0HjkpLsDDcS"
@@ -56,7 +56,7 @@ function LocationComponent({ lat, lon }: args) {
                 ref={map}
             >
                 {position.lat && <Marker latitude={position.lat} longitude={position.lon} />}
-                <div className='absolute top-4 w-screen flex justify-around'>
+                <div className='absolute top-4 w-full flex justify-around'>
                     <button
                         className="border rounded-xl border-solid border-border p-2 top-4 left-4 bg-white truncate text-center"
                         style={{ width: "45%" }}

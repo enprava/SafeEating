@@ -15,6 +15,7 @@ services:
     
   safeeating_back:
     build: ./backend
+    restart: always
     volumes:
       - ./static/:/code/static/
       - ./media/:/code/media/
@@ -26,6 +27,9 @@ services:
       - DB_PORT=$DB_PORT
       - DOMAIN_NAME=$DOMAIN_NAME
       - DEPLOY=True
+      - DJANGO_EMAIL=admin@localhost
+      - DJANGO_SUPERUSER_USERNAME=admin@localhost
+      - DJANGO_SUPERUSER_PASSWORD=12
     networks:
       - safeeating_net
     depends_on:

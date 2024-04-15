@@ -78,7 +78,9 @@ class Command(BaseCommand):
         users = []
         for _ in range(50):
             user = UserFactory()
+            user.set_password("12")
             users.append(user)
+            user.save()
             pic_id = random.randint(0, 23)
 
             with open(

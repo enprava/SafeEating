@@ -14,8 +14,13 @@ class RatingCreateListView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-        establishment_pk = self.kwargs["establishment_pk"]
-        return Rating.objects.filter(establishment_id=establishment_pk)
+        try:
+            establishment_pk = self.kwargs["establishment_pk"]
+            result = Rating.objects.filter(establishment_id=establishment_pk)
+        except KeyError:
+            user_pk = self.kwargs["user_pk"]
+            result = Rating.objects.filter(user_id=user_pk)
+        return result
 
 
 class RatingImageUploadView(views.APIView):
