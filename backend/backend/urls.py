@@ -40,7 +40,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("api/admin/", admin.site.urls),
     path(
-        "api/swagger<format>",
+        "api/swagger<format>/",
         schema_view.without_ui(cache_timeout=0),
         name="schema-json",
     ),
@@ -55,10 +55,10 @@ urlpatterns = [
         name="schema-swagger-ui",
     ),
     path(
-        "api/redoc", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
+        "api/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
     ),
-    path("api/establishment", include("establishment.urls")),
-    path("api/adaptation", include("adaptation.urls")),
-    path("api/user", include("user.urls")),
-    path("api/rating", include("rating.urls")),
+    path("api/establishment/", include("establishment.urls")),
+    path("api/adaptation/", include("adaptation.urls")),
+    path("api/user/", include("user.urls")),
+    path("api/rating/", include("rating.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
