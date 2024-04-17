@@ -152,7 +152,7 @@ MEDIA_ROOT = "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 # Deploy settings
 
