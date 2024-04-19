@@ -158,6 +158,7 @@ APPEND_SLASH = True
 
 if os.getenv("DEPLOY"):
     ALLOWED_HOSTS = [os.getenv("DOMAIN_NAME")]
+    CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("DOMAIN_NAME")}', f'https://{os.getenv("DOMAIN_NAME")}']
     DATABASES = {
         "default": {
             "ENGINE": "django.contrib.gis.db.backends.postgis",

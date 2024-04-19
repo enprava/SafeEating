@@ -9,14 +9,14 @@ import Establishment from "@/components/establishment";
 import Footer from "@/components/footer";
 
 export default function () {
-    const establishmentUrl: string = "/establishment";
+    const establishmentUrl: string = "/establishment/";
     const [establishmentData, setEstablishmentData]: any | {} = useState(null);
     
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user"))
         window.location.href = "/login";
-
-    if (!sessionStorage.getItem("location"))
-        window.location.href = "/location";
+    else
+        if (!sessionStorage.getItem("location"))
+            window.location.href = "/location";
 
     function getData() {
         fetch(URL_API + establishmentUrl)

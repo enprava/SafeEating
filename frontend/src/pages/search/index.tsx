@@ -8,8 +8,8 @@ import Establishment from "@/components/establishment";
 import MapComponent from "@/components/maps/establishment";
 
 export default function () {
-    const establishmentUrl: string = "/establishment";
-    const mapUrl: string = "/establishment/mapa";
+    const establishmentUrl: string = "/establishment/";
+    const mapUrl: string = "/establishment/mapa/";
     const [establishmentData, setEstablishmentData]: any | {} = useState(null);
     const [mapData, setMapData]: any | {} = useState(null)
     const [activeTab, setActiveTad]: any | {} = useState(0);
