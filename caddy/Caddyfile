@@ -1,0 +1,26 @@
+
+{
+    email {$SERVER_EMAIL}
+}
+
+(cors) {
+    @origin header Origin {args[0]}
+	header @origin Access-Control-Allow-Origin "{args[0]}"
+	header @origin Access-Control-Allow-Methods "OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE"
+}
+{$SERVER_NAME} {
+    import cors localhost
+    handle /* {
+        reverse_proxy safeeating_front:3000
+    }
+
+    handle /api* {
+        reverse_proxy safeeating_back:8000
+    }
+    handle /api/static/* {
+        reverse_proxy fileserver
+    }
+    handle /api/images/* {
+        reverse_proxy fileserver
+    }
+}

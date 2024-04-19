@@ -34,7 +34,7 @@ spec:
           volumeMounts:
           - name: backend-static
             mountPath: /code/static
-          - name: backend-media
+          - name: backend-users-media
             mountPath: /code/media
           env:
             - name: DB_HOST
@@ -67,15 +67,30 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: POSTGRES_PASSWORD
+            - name: DJANGO_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: django-credentials
+                  key: DJANGO_EMAIL
+            - name: DJANGO_SUPERUSER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: django-credentials
+                  key: DJANGO_SUPERUSER_USERNAME
+            - name: DJANGO_SUPERUSER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: django-credentials
+                  key: DJANGO_SUPERUSER_PASSWORD
             - name: DEPLOY
               value: "True"           
       volumes:
         - name: backend-static
           persistentVolumeClaim:
             claimName: backend-static
-        - name: backend-media
+        - name: backend-users-media
           persistentVolumeClaim:
-            claimName: backend-media
+            claimName: backend-users-media
 
 
 ---
@@ -108,14 +123,14 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: backend-media
+  name: backend-users-media
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadOnlyMany
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 1Gi
+      storage: 4Gi
       
 ---
 apiVersion: apps/v1
@@ -154,15 +169,15 @@ spec:
         volumeMounts:
         - name: backend-static
           mountPath: /static
-        - name: backend-media
+        - name: backend-users-media
           mountPath: /media     
       volumes:
         - name: backend-static
           persistentVolumeClaim:
             claimName: backend-static
-        - name: backend-media
+        - name: backend-users-media
           persistentVolumeClaim:
-            claimName: backend-media
+            claimName: backend-users-media
 
 ---
 apiVersion: v1

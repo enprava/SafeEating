@@ -1,0 +1,67 @@
+networks: 
+  safeeating_net:
+    driver: bridge
+services:
+  safeeating_db:
+    image: postgis/postgis:16-3.4-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+    networks:
+      - safeeating_net
+    
+  safeeating_back:
+    image: enprava/safeeatingbackend
+    restart: always
+    volumes:
+      - ./static/:/code/static/
+      - ./media/:/code/media/
+    environment:
+      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - DOMAIN_NAME=$DOMAIN_NAME
+      - DEPLOY=True
+    networks:
+      - safeeating_net
+    depends_on:
+      - safeeating_db
+  safeeating_front:
+    image: enprava/safeeatingfrontend
+    networks:
+      - safeeating_net 
+  fileserver:
+    image: enprava/safeeatingnginx
+    volumes:
+      - ./static:/static
+      - ./media:/media
+    depends_on:
+      - safeeating_back
+    networks:
+      - safeeating_net
+  caddy:
+    image: enprava/safeeatingcaddy
+    depends_on:
+      - safeeating_back
+      - safeeating_front
+      - fileserver
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - safeeating_net
+    environment:
+      - SERVER_EMAIL=$SERVER_EMAIL
+      - SERVER_NAME=$DOMAIN_NAME
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+volumes:
+  db_data:
