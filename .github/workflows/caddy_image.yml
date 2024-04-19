@@ -1,4 +1,4 @@
-name: Frontend build and push
+name: Caddy build and push
 on:
   push:
     branches:
@@ -21,10 +21,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./frontend
+          context: ./caddy
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: enprava/safeeatingfrontend:latest
-          build-args: |
-            VITE_ESTABLISHMENT_API=https://safeeating.xyz/api
-            VITE_MEDIA_URL=https://safeeating.xyz
+          tags: enprava/safeeatingcaddy:latest
