@@ -10,8 +10,8 @@ import { ArrowRightIcon } from "@heroicons/react/24/solid";
 export default function () {
     const userId = sessionStorage.getItem('user');
     const token = sessionStorage.getItem("token");
-    const userURL = `/user/${userId}`;
-    const ratingsURL = `/rating/user/${userId}`
+    const userURL = `/user/${userId}/`;
+const ratingsURL = `/rating/user/${userId}/`
     const [userData, setUserData]: any | {} = useState(null);
     const [ratings, setRatings]: any | {} = useState(null)
 
