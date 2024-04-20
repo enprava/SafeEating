@@ -5,7 +5,6 @@ interface args {
 }
 
 function RatingController({ data }: args) {
-
     return (
         <>
             <p className="ml-3 mt-3 mb-2 text-2xl font-medium" >Valoraciones</p>
