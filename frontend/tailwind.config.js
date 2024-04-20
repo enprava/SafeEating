@@ -20,6 +20,7 @@ export default {
       "text-gray": "#737373",
       "no-veggie": "#b9c1c",
       "like": "#dc2626",
+      "black": colors.black,
     }
   },
   plugins: [
