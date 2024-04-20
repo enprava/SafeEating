@@ -32,7 +32,7 @@ function Rating({ userImg, firstName, lastName, stars, body, ratingImgs }: args)
         return result;
     }
     function showImages() {
-        if (!ratingImgs[0].url)
+        if (ratingImgs.length == 0)
             return <p className="mb-2 w-full text-center text-sm text-text-gray">No hay imágenes disponibles</p>;
         return (
             <div className="mx-2 my-2 flex justify-center">

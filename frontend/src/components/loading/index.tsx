@@ -15,12 +15,13 @@
 //   export default Loading;
 
 type args = {
-    className?: string
+    className?: string,
+    style?: {}
 };
 
-function Loading({ className = "" }: args) {
+function Loading({ className = "", style = {} }: args) {
     return (
-        <div className={className}>
+        <div className={className} style={style}>
             <div
                 className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-loading border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
                 role="status"

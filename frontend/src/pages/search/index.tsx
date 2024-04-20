@@ -19,10 +19,9 @@ export default function () {
     const radius = 2000;
 
     function getMapData() {
-        console.log(location)
         const lon: any = location?.split(',')[0] ? location?.split(',')[0]: "-5.987375667032342";
         const lat: any = location?.split(',')[1] ? location?.split(',')[1]: "37.3930443446";
-        fetch(`${URL_API}${mapUrl}/${lon},${lat},${radius}`)
+        fetch(`${URL_API}${mapUrl}${lon},${lat},${radius}/`)
             .then((response) => response.json())
             .then((data) => setMapData(data));
 
@@ -39,7 +38,7 @@ export default function () {
     function showMap() {
         if (!mapData) {
             getMapData();
-            return <>Loading</>
+            return <Loading className="m-2 justify-center items-center flex" style={{height: window.innerHeight -129}}/>
         }
         return <MapComponent data={mapData} />
     }

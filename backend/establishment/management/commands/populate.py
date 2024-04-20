@@ -136,7 +136,7 @@ class Command(BaseCommand):
         rating_images_filenames = os.listdir(
             "establishment/management/factoryimages/ratingimages"
         )
-        for _ in range(10000):
+        for _ in range(5000):
             creator = random.choice(users)
             rated_establishment = random.choice(establishments)
             rating = RatingFactory(user=creator, establishment=rated_establishment)
