@@ -55,12 +55,14 @@ export default function () {
             <Establishment name={establishment.name} address={establishment.address} website={establishment.website} adaptations={establishment.adaptations} images={establishment.images} location={establishment.location} stars={establishment.stars} />
         ));
         return establishments;
+        // return <Establishment name={establishmentData.results[0].name} address={establishmentData.results[0].address} website={establishmentData.results[0].website} adaptations={establishmentData.results[0].adaptations} images={establishmentData.results[0].images} location={establishmentData.results[0].location} stars={establishmentData.results[0].stars} />
+            
     }
     return (
         <div className="mt-2">
             <SearchBar />
             <Tab.Group defaultIndex={0} selectedIndex={activeTab} onChange={setActiveTad}>
-                <Tab.List className="mt-2 flex mx-2">
+                <Tab.List className="mt-2 flex mx-2 z-50 relative">
                     <Tab className="py-1 bg-bg border border-r-0 rounded-l-xl border-solid border-border text-center w-1/2 ui-selected:bg-selected ui-focus-visible:bg-white">Lista</Tab>
                     <Tab className="py-1 bg-bg border rounded-r-xl border-solid border-border text-center w-1/2 ui-selected:bg-selected">Mapa</Tab>
                 </Tab.List>

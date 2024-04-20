@@ -2,6 +2,7 @@ import MEDIA_URL from "@/utils/media-url";
 import { GlobeEuropeAfricaIcon, StarIcon, HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { HeartIcon as HeartIconOutline, NoSymbolIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import ListImageSweeper from "../galleries/list";
 
 export type establishmentArgs = {
     name: string,
@@ -15,9 +16,9 @@ export type establishmentArgs = {
     className?: string
 }
 
-function Establishment({ name, address, adaptations, images, location, stars, liked = false , className=""}: establishmentArgs) {
+function Establishment({ name, address, adaptations, images, location, stars, liked = false, className = "" }: establishmentArgs) {
     const [isLiked, setIsLiked] = useState(liked);
-    
+
     function getVeggies() {
         var vegen = null;
         for (const adapt of adaptations) {
@@ -52,7 +53,6 @@ function Establishment({ name, address, adaptations, images, location, stars, li
                 <>
                     <div className="grid grid-cols-3 gap-1">
                         {intolerances}
-
                     </div>
                 </>
             );
@@ -72,22 +72,18 @@ function Establishment({ name, address, adaptations, images, location, stars, li
         setIsLiked(!isLiked);
     }
     return (
-        <div className={"mx-2 mt-3 border rounded-xl border-solid border-border overflow-hidden drop-shadow-2xl h-40 bg-white pb-5 " + className} >
-            <div className="flex flex-row overflow-hidden h-4/6 w-full relative">
-                {images.map((image) => (
-                    <div className="m-0 w-fit h-fit absolute">
-                        <img src={MEDIA_URL + image.url} className="m-0 h-full w-full -translate-y-1/2" />
-                    </div>
-                ))}
+        <div className={"mx-2 mt-3 border rounded-xl border-solid border-border drop-shadow-2xl h-40 bg-white pb-5 " + className} >
+            <div className="flex flex-row h-4/6 w-full relative overflow-hidden">
+                <ListImageSweeper images={images}/>
             </div>
-            <div className="m-0 grid grid-cols-2">
+            <div className="grid grid-cols-2">
                 <div className=" mx-2  mt-1 flex flex-col justify-around">
                     <p className="text-xs font-semibold truncate">{name}</p>
                     <div className="flex items-end">
-                        <StarIcon className="h-4 text-star mr-2u" />
+                        <StarIcon className="h-4 text-star mr-2" />
                         <p className="text-xs/3">{stars}</p>
                     </div>
-                    <div className="flex">
+                    <div className="flex z-10">
                         <p className="truncate" style={{ fontSize: 9, lineHeight: 2 }}>{address}</p>
                         <a className="max-w-4 mr-1" href={`https://www.google.com/maps?q=${location.coordinates[1]},${location.coordinates[0]}`} target="_blank"><GlobeEuropeAfricaIcon className="w-full h-full" /></a>
                         <div className="max-w-4">{isLiked ? <HeartIconSolid className="w-full h-full text-like" onClick={onClickLike} /> : <HeartIconOutline className="w-full h-full" onClick={onClickLike} />}</div>
