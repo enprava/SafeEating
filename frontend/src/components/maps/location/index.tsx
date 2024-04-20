@@ -46,8 +46,8 @@ function LocationComponent({ lat, lon }: args) {
         <>
             <Map
                 initialViewState={{
-                    longitude: -5,
-                    latitude: 37,
+                    longitude: -5.97317,
+                    latitude: 37.38283,
                     zoom: 4
                 }}
                 style={{ height: getMapHeight() }}

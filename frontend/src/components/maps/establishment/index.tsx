@@ -56,8 +56,8 @@ function MapComponent({ data }: args) {
     return (
         <Map
             initialViewState={{
-                longitude: -5,
-                latitude: 37,
+                longitude: -5.97317,
+                latitude: 37.38283,
                 zoom: 7
             }}
             onLoad={onLoad}

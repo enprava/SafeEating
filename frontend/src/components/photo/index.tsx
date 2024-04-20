@@ -22,7 +22,7 @@ function Photo({ fistName, lastName, img, email }: args) {
         // console.log(image);
         const formData = new FormData()
         formData.append("image", image);
-        await fetch(URL_API + `/user/${user}/upload-pic`, {
+        await fetch(URL_API + `/user/${user}/upload-pic/`, {
             method: 'POST',
             body: formData,
             headers: {
