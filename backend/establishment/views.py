@@ -36,6 +36,24 @@ class EstablishmentListView(generics.ListAPIView):
     serializer_class = EstablishmentSerializer
     renderer_classes = [JSONRenderer]
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        try:
+            lat = float(self.request.resolver_match.kwargs["lat"])
+            lon = float(self.request.resolver_match.kwargs["lon"])
+            radius = int(self.request.resolver_match.kwargs["radius"])
+        except:
+            return queryset
+            
+        radius = radius if radius < 2000 else 2000
+        position = Point(lat, lon, srid=4326)
+
+        queryset = queryset.filter(
+            location__distance_lte=(position, Distance(m=radius))
+        )
+
+        return queryset
 
 class EstablishmentCreateView(generics.CreateAPIView):
     queryset = Establishment.objects.all()

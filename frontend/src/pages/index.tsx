@@ -1,3 +1,4 @@
+
 import SearchBar from "@/components/search-bar";
 import AdaptationMenu from "@/components/adaptation-menu";
 import { GlobeEuropeAfricaIcon } from "@heroicons/react/24/solid";
@@ -10,36 +11,64 @@ import Footer from "@/components/footer";
 
 export default function () {
     const establishmentUrl: string = "/establishment/";
-    const [establishmentData, setEstablishmentData]: any | {} = useState(null);
-    
-    if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user"))
-        window.location.href = "/login";
-    else
-        if (!sessionStorage.getItem("location"))
-            window.location.href = "/location";
+    const [establishmentData, setEstablishmentData]: any = useState([]);
+    const [lastResponse, _setLastResponse]: any = useState(null);
+    const location = sessionStorage.getItem("location");
 
-    function getData() {
-        fetch(URL_API + establishmentUrl)
+    if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user")) {
+        window.location.href = "/login";
+        return
+    }
+    else {
+        if (!location) {
+            window.location.href = "/location";
+            return
+        }
+    }
+    function setLastResponse(response: any) {
+        _setLastResponse(response);
+        setEstablishmentData([...establishmentData, ...response.results])
+    }
+    function getData(url: string) {
+        fetch(url)
             .then((response) => response.json())
             .then(
                 (data) => {
-                    setEstablishmentData(data);
+                    setLastResponse(data);
                 }
             );
     };
 
     function showData() {
-        if (!establishmentData) {
-            getData();
+        if (establishmentData.length == 0) {
+            const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
+            const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
+
+            getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}`);
             return <Loading className="m-0 justify-center items-center flex" />;
         }
 
         const establishments: any = [];
-
-        establishmentData.results.forEach((establishment: any) => establishments.push(
+        establishmentData.forEach((establishment: any) => establishments.push(
             <Establishment name={establishment.name} address={establishment.address} website={establishment.website} adaptations={establishment.adaptations} images={establishment.images} location={establishment.location} stars={establishment.stars} />
         ));
         return establishments;
+    }
+
+    function getMoreData() {
+            getData(lastResponse.next);
+    }
+
+    function loadMore() {
+        if (!(lastResponse && lastResponse.next))
+            return
+        return (
+            <div className="flex w-full justify-center">
+                <button className="mt-2 text-text-gray text-xs col-span-3" onClick={getMoreData}>
+                    Cargar más
+                </button>
+            </div>
+        );
     }
 
     return (
@@ -48,7 +77,7 @@ export default function () {
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
             </div>
-            <SearchBar/>
+            <SearchBar />
             <AdaptationMenu />
             <div>
                 <p className="font-semibold ml-2 mt-2">Cerca de ti</p>
@@ -61,7 +90,8 @@ export default function () {
             <div>
                 {showData()}
             </div>
-            <Footer className="mt-2"/>
+            {loadMore()}
+            <Footer className="mt-2" />
         </>
     );
 }
