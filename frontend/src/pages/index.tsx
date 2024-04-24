@@ -8,6 +8,7 @@ import URL_API from "@/utils/url-api";
 import { useState } from "react";
 import Establishment from "@/components/establishment";
 import Footer from "@/components/footer";
+import LoadMore from "@/components/load-more";
 
 export default function () {
     const establishmentUrl: string = "/establishment/";
@@ -59,18 +60,6 @@ export default function () {
             getData(lastResponse.next);
     }
 
-    function loadMore() {
-        if (!(lastResponse && lastResponse.next))
-            return
-        return (
-            <div className="flex w-full justify-center">
-                <button className="mt-2 text-text-gray text-xs col-span-3" onClick={getMoreData}>
-                    Cargar más
-                </button>
-            </div>
-        );
-    }
-
     return (
         <>
             <div className="my-2 ml-2 flex">
@@ -90,7 +79,7 @@ export default function () {
             <div>
                 {showData()}
             </div>
-            {loadMore()}
+            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData}/>
             <Footer className="mt-2" />
         </>
     );
