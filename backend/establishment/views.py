@@ -43,7 +43,7 @@ class EstablishmentListView(generics.ListAPIView):
             lat = float(self.request.resolver_match.kwargs["lat"])
             lon = float(self.request.resolver_match.kwargs["lon"])
             radius = int(self.request.resolver_match.kwargs["radius"])
-        except:
+        except Exception:
             return queryset
             
         radius = radius if radius < 2000 else 2000
