@@ -22,7 +22,6 @@ export default function () {
                 <p className="font-bold text-xl"> Selecciona tu ubicación</p>
             </div>
             <LocationComponent lat={location.lat} lon={location.lon} />
-            <Footer/>
         </>
     );
 }

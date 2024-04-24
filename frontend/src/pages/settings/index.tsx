@@ -6,24 +6,37 @@ import AdaptationMenu from "@/components/adaptation-menu";
 import RatingController from "@/components/ratings/controller";
 import Footer from "@/components/footer";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import LoadMore from "@/components/load-more";
 
 export default function () {
     const userId = sessionStorage.getItem('user');
     const token = sessionStorage.getItem("token");
     const userURL = `/user/${userId}/`;
-const ratingsURL = `/rating/user/${userId}/`
-    const [userData, setUserData]: any | {} = useState(null);
-    const [ratings, setRatings]: any | {} = useState(null)
+    const ratingsURL = `/rating/user/${userId}/`;
+    const [userData, setUserData]: any = useState(null);
+    const [lastResponse, setLastResponse]: any = useState(null)
+    const [ratings, _setRatings]:any = useState([])
 
 
-    function fetchRatings() {
-        fetch(URL_API + ratingsURL)
+    function setRatings(data: any){
+        _setRatings([...ratings, ...data.results]);
+        setLastResponse(data);
+    }
+    function fetchRatings(url:string) {
+        fetch(url)
             .then((response) => response.json())
-            .then((data) => setRatings(data));
+            .then((data) => {
+                setRatings(data)
+            });
+    }
+
+    function getMoreData(){
+        fetchRatings(lastResponse.next)
     }
     function showRatings() {
-        if (!ratings) {
-            fetchRatings()
+        const url = URL_API + ratingsURL;
+        if (ratings.length == 0) {
+            fetchRatings(url)
             return <>Loading</>;
         }
         return <RatingController data={ratings} />
@@ -55,6 +68,7 @@ const ratingsURL = `/rating/user/${userId}/`
         <>
             {showUserData()}
             {showRatings()}
+            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData}/>
             <p className="ml-3 mt-4sud text-2xl font-medium">Seguridad</p>
             <div className="flex justify-center mx-2 my-2">
                 <a className="w-full bg-white border rounded-xl border-solid border-border p-1 flex justify-between">

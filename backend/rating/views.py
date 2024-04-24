@@ -5,14 +5,15 @@ from .serializers import RatingSerializer
 from rest_framework.parsers import MultiPartParser
 from rest_framework import permissions
 from rest_framework.response import Response
-
+from .paginations import RatingsPagination
 
 class RatingCreateListView(generics.ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     renderer_classes = [JSONRenderer]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
+    pagination_class = RatingsPagination
+    
     def get_queryset(self):
         try:
             establishment_pk = self.kwargs["establishment_pk"]

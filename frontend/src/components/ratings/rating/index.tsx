@@ -1,19 +1,19 @@
 import MEDIA_URL from "@/utils/media-url"
 import { StarIcon } from "@heroicons/react/24/solid"
-import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline"
+import { StarIcon as StarIconOutline, NoSymbolIcon } from "@heroicons/react/24/outline"
 
 interface args {
     userImg: string,
     firstName: string,
     lastName: string,
-    intolerances: string[],
-    veggie: string,
+    intolerances: any,
+    veggie: any,
     stars: number,
     body: string,
     ratingImgs: { id: number, url: string }[],
 }
 
-function Rating({ userImg, firstName, lastName, stars, body, ratingImgs }: args) {
+function Rating({ userImg, firstName, intolerances, veggie, lastName, stars, body, ratingImgs }: args) {
     function showStars() {
         if (stars === 0)
             return <StarIconOutline className="h-4 text-star" />
@@ -37,20 +37,22 @@ function Rating({ userImg, firstName, lastName, stars, body, ratingImgs }: args)
         return (
             <div className="mx-2 my-2 flex justify-center">
                 {ratingImgs.map((img) => (
-                    <img src={MEDIA_URL + img.url} className="h-20 rounded-full" />
+                    (img.url ? <img src={MEDIA_URL + img.url} className="h-20 rounded-full" /> : <p className="mb-2 w-full text-center text-sm text-text-gray">No hay imágenes disponibles</p>)
                 ))}
             </div>
         );
     }
     return (
         <div className="mx-2 my-2 bg-white border rounded-xl border-solid border-border">
-            <div className="flex">
+            <div className="flex justify-start">
                 <img src={MEDIA_URL + userImg} alt={firstName} className="h-8 mt-1 ml-1 rounded-full" />
-                <p className="ml-2 font-medium pt-2.5">{firstName} {lastName}</p>
-                {/* {intolerances.map((intolerance) => (
-                    <img src={intolerance} alt={intolerance} className="h2 rounded-full" />
-                ))} */}
-                {/* <img src={veggie} alt="Veggie" className="h2 rounded-full" /> */}
+                <p className="ml-2 font-medium pt-2.5 truncate">{firstName} {lastName}</p>
+                <div className="mt-2 mx-2 grid grid-cols-7 gap-x-px">
+                    {intolerances.map((intolerance: any) => (
+                        <img src={MEDIA_URL + intolerance.url} alt={intolerance.name} className="h-4 rounded-full" />
+                    ))}
+                </div>
+                <div className="flex grow justify-center">{veggie ? <img src={MEDIA_URL + veggie.url} alt="Veggie" className="h-8 mt-2 mx-2 rounded-full" /> : <NoSymbolIcon className="h-8 mt-2 mx-0" />}</div>
             </div>
             <div className="flex ml-2">
                 {showStars()}
