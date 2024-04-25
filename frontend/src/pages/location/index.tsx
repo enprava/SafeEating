@@ -1,4 +1,3 @@
-import Footer from "@/components/footer";
 import LocationComponent from "@/components/maps/location";
 import { useEffect, useState } from "react";
 
@@ -11,7 +10,6 @@ export default function () {
                     lat: position.coords.latitude,
                     lon: position.coords.longitude
                 });
-                console.log(position);
             });
         }
     }
