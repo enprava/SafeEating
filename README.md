@@ -8,7 +8,7 @@ Safe Eating is a user-friendly mobile application designed to help individuals w
 
 Run the entire project in docker with:
 ```
-docker compose -f docker-compose-dev.yml up
+docker compose -f docker-compose-dev.yml up --build
 ```
 
 This docker compose setup builds 2 images (backend and frontend) and runs a third with the postgis database.
@@ -28,8 +28,8 @@ You can run frontend by:
 ```
 cd frontend
 npm i
-npm run dev
+npm run start
 ```
 ### Running deployment containers
 
-By running `docker compose up` you can run the entire deployment setup. You can add the flag `-f docker-compose-pi.yml` to run it in raspberry-pi devices.
+By running `docker compose up` you can run the entire deployment setup.
