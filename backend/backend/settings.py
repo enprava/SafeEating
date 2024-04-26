@@ -168,5 +168,5 @@ if os.getenv("DEPLOY"):
             "PORT": os.getenv("DB_PORT"),
         }
     }
-    DEBUG = False
+    # DEBUG = False
 
