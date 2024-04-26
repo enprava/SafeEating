@@ -155,7 +155,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 APPEND_SLASH = True
 
 # Deploy settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 if os.getenv("DEPLOY"):
     ALLOWED_HOSTS = [os.getenv("DOMAIN_NAME")]
     CSRF_TRUSTED_ORIGINS = [f'https://{os.getenv("DOMAIN_NAME")}', f'https://{os.getenv("DOMAIN_NAME")}']
@@ -169,6 +168,5 @@ if os.getenv("DEPLOY"):
             "PORT": os.getenv("DB_PORT"),
         }
     }
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     DEBUG = False
 
