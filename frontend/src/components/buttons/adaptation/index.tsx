@@ -6,14 +6,16 @@ type args = {
     alt: string,
     className: string,
     isCheckedByDefault?: boolean,
+    readonly: boolean
 }
 
 
-function AdaptationButton({ img, alt, className, isCheckedByDefault = false }: args) {
+function AdaptationButton({ img, alt, className, isCheckedByDefault = false, readonly }: args) {
     const [isChecked, setIsChecked] = useState(isCheckedByDefault);
 
     function toggleChecked() {
-        setIsChecked(!isChecked);
+        if (!readonly)
+            setIsChecked(!isChecked);
     }
 
     return (

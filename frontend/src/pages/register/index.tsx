@@ -40,7 +40,7 @@ export default function () {
     }
     return (
         <>
-            <div className="absolute top-20 w-full flex justify-center">
+            <div className="relative top-20 w-full flex justify-center">
                 <p className="text-3xl">Safe Eating</p>
 
             </div>

@@ -3,15 +3,19 @@ import URL_API from "@/utils/url-api";
 import Loading from "@/components/loading";
 import { useState } from "react";
 
-function AdaptationMenu() {
+interface args {
+    checked?: number[],
+    readOnly?: boolean,
+};
+function AdaptationMenu({ checked = [], readOnly = false }: args) {
     const [data, setData]: any | {} = useState(null)
 
     function fetchData() {
         fetch(URL_API + "/adaptation")
-        .then((response) => response.json())
-        .then((data) => {
-            setData(data);
-        });
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data);
+            });
     }
 
     function showData() {
@@ -23,10 +27,11 @@ function AdaptationMenu() {
         const veggies = [];
         const intolerances = [];
         for (const adapt of data) {
+            const isChecked = Boolean(checked.find((adaptionId: number) => adaptionId == adapt.id))
             if (adapt.name === "Vegano" || adapt.name === "Vegetariano") {
-                veggies.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="w-14" />);
+                veggies.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="w-14" isCheckedByDefault={isChecked} readonly={readOnly}/>);
             } else {
-                intolerances.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="h-10 m-1" />)
+                intolerances.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="h-10 m-1" isCheckedByDefault={isChecked} readonly={readOnly}/>)
             }
         }
 

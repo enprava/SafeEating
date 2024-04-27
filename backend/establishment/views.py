@@ -77,3 +77,8 @@ class EstablishmentImageUploadView(views.APIView):
         establishment_image.url.save(filename, image.file)
         serializer = EstablishmentSerializer(establishment)
         return Response(serializer.data)
+
+class UserRetrieveView(generics.RetrieveAPIView):
+    queryset = Establishment.objects.all()
+    serializer_class = EstablishmentSerializer
+    renderer_classes = [JSONRenderer]
