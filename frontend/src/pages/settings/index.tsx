@@ -5,7 +5,6 @@ import MEDIA_URL from "@/utils/media-url";
 import AdaptationMenu from "@/components/adaptation-menu";
 import RatingController from "@/components/ratings/controller";
 import Footer from "@/components/footer";
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import LoadMore from "@/components/load-more";
 import DefaultButton from "@/components/buttons/default";
 
