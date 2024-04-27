@@ -52,10 +52,9 @@ export default function () {
         const establishments: any = [];
 
         establishmentData.results.forEach((establishment: any) => establishments.push(
-            <Establishment name={establishment.name} address={establishment.address} website={establishment.website} adaptations={establishment.adaptations} images={establishment.images} location={establishment.location} stars={establishment.stars} />
+            <Establishment id={establishment.id} name={establishment.name} address={establishment.address} website={establishment.website} adaptations={establishment.adaptations} images={establishment.images} location={establishment.location} stars={establishment.stars} />
         ));
         return establishments;
-        // return <Establishment name={establishmentData.results[0].name} address={establishmentData.results[0].address} website={establishmentData.results[0].website} adaptations={establishmentData.results[0].adaptations} images={establishmentData.results[0].images} location={establishmentData.results[0].location} stars={establishmentData.results[0].stars} />
             
     }
     return (

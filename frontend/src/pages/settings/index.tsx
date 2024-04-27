@@ -7,6 +7,7 @@ import RatingController from "@/components/ratings/controller";
 import Footer from "@/components/footer";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import LoadMore from "@/components/load-more";
+import DefaultButton from "@/components/buttons/default";
 
 export default function () {
     const userId = sessionStorage.getItem('user');
@@ -15,14 +16,14 @@ export default function () {
     const ratingsURL = `/rating/user/${userId}/`;
     const [userData, setUserData]: any = useState(null);
     const [lastResponse, setLastResponse]: any = useState(null)
-    const [ratings, _setRatings]:any = useState([])
+    const [ratings, _setRatings]: any = useState([])
 
 
-    function setRatings(data: any){
+    function setRatings(data: any) {
         _setRatings([...ratings, ...data.results]);
         setLastResponse(data);
     }
-    function fetchRatings(url:string) {
+    function fetchRatings(url: string) {
         fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -30,7 +31,7 @@ export default function () {
             });
     }
 
-    function getMoreData(){
+    function getMoreData() {
         fetchRatings(lastResponse.next)
     }
     function showRatings() {
@@ -58,7 +59,7 @@ export default function () {
         }
         return (
             <>
-                <Photo fistName={userData.first_name} lastName={userData.last_name} img={userData.pic.url ? MEDIA_URL + userData.pic.url: null} email={userData.email} />
+                <Photo fistName={userData.first_name} lastName={userData.last_name} img={userData.pic.url ? MEDIA_URL + userData.pic.url : null} email={userData.email} />
                 <p className="ml-3 mt-4sud text-2xl font-medium">Alérgenos</p>
                 <AdaptationMenu />
             </>
@@ -68,13 +69,10 @@ export default function () {
         <>
             {showUserData()}
             {showRatings()}
-            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData}/>
+            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData} />
             <p className="ml-3 mt-4sud text-2xl font-medium">Seguridad</p>
-            <div className="flex justify-center mx-2 my-2">
-                <a className="w-full bg-white border rounded-xl border-solid border-border p-1 flex justify-between">
-                    <p className="mx-2 text-sm">Cambiar contraseña</p>
-                    <ArrowRightIcon className="h-5 mx-2"/>
-                </a>
+            <div className="flex justify-center m-2">
+                <DefaultButton href="#" text="Cambiar contraseña" />
             </div>
             <Footer />
         </>
