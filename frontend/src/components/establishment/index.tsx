@@ -5,6 +5,7 @@ import { useState } from "react";
 import ListImageSweeper from "../galleries/list";
 
 export type establishmentArgs = {
+    id: number,
     name: string,
     address: string,
     website: string,
@@ -16,7 +17,7 @@ export type establishmentArgs = {
     className?: string
 }
 
-function Establishment({ name, address, adaptations, images, location, stars, liked = false, className = "" }: establishmentArgs) {
+function Establishment({ id, name, address, adaptations, images, location, stars, liked = false, className = "" }: establishmentArgs) {
     const [isLiked, setIsLiked] = useState(liked);
 
     function getVeggies() {
@@ -74,7 +75,7 @@ function Establishment({ name, address, adaptations, images, location, stars, li
     return (
         <div className={"mx-2 mt-3 border rounded-xl border-solid border-border drop-shadow-2xl h-40 bg-white pb-5 " + className} >
             <div className="flex flex-row h-4/6 w-full relative overflow-hidden">
-                <ListImageSweeper images={images}/>
+                <ListImageSweeper images={images} href={"/establishments/" + id.toString()}/>
             </div>
             <div className="grid grid-cols-2">
                 <div className=" mx-2  mt-1 flex flex-col justify-around">

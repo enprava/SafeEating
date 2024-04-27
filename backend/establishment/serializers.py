@@ -34,6 +34,7 @@ class EstablishmentGeoSerializer(geoserializers.GeoFeatureModelSerializer):
     class Meta:
         model = Establishment
         fields = [
+            "id",
             "name",
             "address",
             "website",
@@ -78,6 +79,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Establishment
         fields = [
+            "id",
             "name",
             "location",
             "address",

@@ -34,6 +34,7 @@ function MapComponent({ data }: args) {
         map.current?.on("click", "unclustered-point", (e) => {
             const feature = map.current?.queryRenderedFeatures(e.point, { layers: ["unclustered-point"] })[0] as any;
             setSelectedEstablishmentArgs({
+                id: feature.id,
                 name: feature.properties.name,
                 address: feature.properties.address,
                 website: feature.properties.website,
