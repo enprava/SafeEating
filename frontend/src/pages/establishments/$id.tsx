@@ -57,15 +57,15 @@ export default function () {
         <>
             <Header title="" />
             {establishmentData ? <>
-                <p className="m-2 text-2xl font-medium">{establishmentData.name}</p>
-                <div className=" mx-2 flex flex-row h-40 relative overflow-hidden">
+                <p className="m-4 text-2xl font-medium">{establishmentData.name}</p>
+                <div className=" m-4 flex flex-row h-40 relative overflow-hidden">
                     <ShowImageSweeper images={establishmentData.images} />
                 </div>
-                <div className="flex justify-center m-2 flex-col">
-                    <DefaultButton href={`https://www.google.com/maps?q=${establishmentData.location.coordinates[1]},${establishmentData.location.coordinates[0]}`} text={establishmentData.address} className="border-b-0 rounded-b-none" isOut={true}/>
-                    <DefaultButton href={"https://" + establishmentData.website} text="Sitio web" className="rounded-t-none" isOut={true}/>
+                <div className="flex justify-center m-4 flex-col">
+                    <DefaultButton href={`https://www.google.com/maps?q=${establishmentData.location.coordinates[1]},${establishmentData.location.coordinates[0]}`} text={establishmentData.address} className="border-b-0 rounded-b-none" isOut={true} />
+                    <DefaultButton href={"https://" + establishmentData.website} text="Sitio web" className="rounded-t-none" isOut={true} />
                 </div>
-                <p className="m-2 text-2xl font-medium">Alérgenos</p>
+                <p className="m-4 text-2xl font-medium">Alérgenos</p>
                 <AdaptationMenu checked={establishmentData.adaptations.map((adaption: any) => adaption.id)} readOnly={true} />
             </> : getEstablishment()}
             {showRatings()}

@@ -33,7 +33,7 @@ function Photo({ fistName, lastName, img, email }: args) {
     }  
 
     return (
-        <div className="px-2 bg-white border rounded-xl border-solid border-border flex flex-col justify-center items-center m-2">
+        <div className="px-2 bg-white border rounded-xl border-solid border-border flex flex-col justify-center items-center m-4">
             <div className="relative">
                 {
                     img ?

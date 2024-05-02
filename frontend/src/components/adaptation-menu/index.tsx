@@ -21,7 +21,7 @@ function AdaptationMenu({ checked = [], readOnly = false }: args) {
     function showData() {
         if (!data) {
             fetchData();
-            return <Loading className="col-span-4 my-5 justify-center items-center flex" />
+            return <Loading className="col-span-4 m-12 justify-center items-center flex" />
         }
 
         const veggies = [];
@@ -48,7 +48,7 @@ function AdaptationMenu({ checked = [], readOnly = false }: args) {
     }
 
     return (
-        <div className="mx-2 mt-2 rounded-xl bg-white border rounded-xl border-solid border-border grid grid-cols-4">
+        <div className="m-4 rounded-xl bg-white border rounded-xl border-solid border-border grid grid-cols-4">
             {showData()}
         </div>
     );

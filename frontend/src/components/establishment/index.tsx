@@ -68,33 +68,31 @@ function Establishment({ id, name, address, adaptations, images, location, stars
             </>
         );
     }
-
-    function onClickLike() {
-        setIsLiked(!isLiked);
-    }
     return (
-        <div className={"mx-2 mt-3 border rounded-xl border-solid border-border drop-shadow-2xl h-40 bg-white pb-5 " + className} >
+        <div className={"m-4 border rounded-xl border-solid border-border drop-shadow-2xl h-40 bg-white pb-5 " + className} >
             <div className="flex flex-row h-4/6 w-full relative overflow-hidden">
-                <ListImageSweeper images={images} href={"/establishments/" + id.toString()}/>
+                <ListImageSweeper images={images} href={"/establishments/" + id.toString()} />
             </div>
-            <div className="grid grid-cols-2">
-                <div className=" mx-2  mt-1 flex flex-col justify-around">
-                    <p className="text-xs font-semibold truncate">{name}</p>
-                    <div className="flex items-end">
-                        <StarIcon className="h-4 text-star mr-2" />
-                        <p className="text-xs/3">{stars}</p>
+            <a href={"/establishments/" + id.toString()}>
+                <div className="grid grid-cols-2">
+                    <div className=" mx-2  mt-1 flex flex-col justify-around">
+                        <p className="text-xs font-semibold truncate">{name}</p>
+                        <div className="flex items-end">
+                            <StarIcon className="h-4 text-star mr-2" />
+                            <p className="text-xs/3">{stars}</p>
+                        </div>
+                        <div className="flex z-10 justify-between">
+                            <p className="truncate" style={{ fontSize: 9, lineHeight: 2 }}>{address}</p>
+                            <a className="max-w-4" href={`https://www.google.com/maps?q=${location.coordinates[1]},${location.coordinates[0]}`} target="_blank"><GlobeEuropeAfricaIcon className="w-full h-full" /></a>
+                        </div>
                     </div>
-                    <div className="flex z-10">
-                        <p className="truncate" style={{ fontSize: 9, lineHeight: 2 }}>{address}</p>
-                        <a className="max-w-4 mr-1" href={`https://www.google.com/maps?q=${location.coordinates[1]},${location.coordinates[0]}`} target="_blank"><GlobeEuropeAfricaIcon className="w-full h-full" /></a>
-                        <div className="max-w-4">{isLiked ? <HeartIconSolid className="w-full h-full text-like" onClick={onClickLike} /> : <HeartIconOutline className="w-full h-full" onClick={onClickLike} />}</div>
+                    <div className="ml-4 mt-1 grid grid-cols-2">
+                        {showIntolerances()}
+                        {getVeggies()}
                     </div>
                 </div>
-                <div className="ml-4 mt-1 grid grid-cols-2">
-                    {showIntolerances()}
-                    {getVeggies()}
-                </div>
-            </div>
+            </a>
+
         </div>
     );
 }

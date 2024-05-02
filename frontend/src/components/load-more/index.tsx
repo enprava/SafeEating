@@ -11,7 +11,7 @@ function LoadMore({loadMore, getMoreData}: args) {
         return
     return (
         <div className="flex w-full justify-center">
-            <button className="mt-2 text-text-gray text-xs col-span-3" onClick={getMoreData}>
+            <button className="m-4 text-text-gray text-xs col-span-3" onClick={getMoreData}>
                 Cargar más
             </button>
         </div>
