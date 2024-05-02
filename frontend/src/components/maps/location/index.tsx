@@ -10,7 +10,7 @@ function LocationComponent({ lat, lon }: args) {
     const map = useRef<MapRef>(null);
 
     function getMapHeight() {
-        return window.innerHeight - 62;
+        return window.innerHeight - 60;
     }
     useEffect(setUserPosition, [lat, lon]);
     function setUserPosition() {
@@ -56,7 +56,7 @@ function LocationComponent({ lat, lon }: args) {
                 ref={map}
             >
                 {position.lat && <Marker latitude={position.lat} longitude={position.lon} />}
-                <div className='absolute top-4 w-full flex justify-around'>
+                <div className='absolute bottom-10 w-full flex justify-around'>
                     <button
                         className="border rounded-xl border-solid border-border p-2 top-4 left-4 bg-white truncate text-center"
                         style={{ width: "45%" }}

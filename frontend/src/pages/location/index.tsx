@@ -16,7 +16,7 @@ export default function () {
     useEffect(componentDidMount, []);
     return (
         <>
-            <div className="flex justify-center items-center">
+            <div className="m-4 flex justify-center items-center">
                 <p className="font-bold text-xl"> Selecciona tu ubicación</p>
             </div>
             <LocationComponent lat={location.lat} lon={location.lon} />

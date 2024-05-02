@@ -70,10 +70,10 @@ export default function () {
 
     return (
         <>
-            <div className="m-4 flex">
+            <a className="m-4 flex" href="/location">
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
-            </div>
+            </a>
             <SearchBar />
             <AdaptationMenu />
             <div className="m-4">
