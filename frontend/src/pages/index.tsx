@@ -46,31 +46,39 @@ export default function () {
             const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
 
             getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}`);
-            return <Loading className="m-0 justify-center items-center flex" />;
+            return <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 356 }} />;
         }
 
         const establishments: any = [];
         establishmentData.forEach((establishment: any) => establishments.push(
-            <Establishment id={establishment.id} name={establishment.name} address={establishment.address} website={establishment.website} adaptations={establishment.adaptations} images={establishment.images} location={establishment.location} stars={establishment.stars} />
+            <Establishment
+                id={establishment.id}
+                name={establishment.name}
+                address={establishment.address}
+                website={establishment.website}
+                adaptations={establishment.adaptations}
+                images={establishment.images}
+                location={establishment.location}
+                stars={establishment.stars} />
         ));
         return establishments;
     }
 
     function getMoreData() {
-            getData(lastResponse.next);
+        getData(lastResponse.next);
     }
 
     return (
         <>
-            <div className="my-2 ml-2 flex">
+            <div className="m-4 flex">
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
             </div>
             <SearchBar />
             <AdaptationMenu />
-            <div>
-                <p className="font-semibold ml-2 mt-2">Cerca de ti</p>
-                <div className="text-xs ml-2 flex">
+            <div className="m-4">
+                <p className="font-semibold">Cerca de ti</p>
+                <div className="text-xs flex">
                     <a className="mr-2"> Ir al mapa</a>
                     <GlobeEuropeAfricaIcon className="h-4" />
                 </div>
@@ -79,8 +87,8 @@ export default function () {
             <div>
                 {showData()}
             </div>
-            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData}/>
-            <Footer className="mt-2" />
+            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData} />
+            <Footer className="mt-4" />
         </>
     );
 }

@@ -43,7 +43,7 @@ function Rating({ userImg, firstName, intolerances, veggie, lastName, stars, bod
         );
     }
     return (
-        <div className="mx-2 my-2 bg-white border rounded-xl border-solid border-border">
+        <div className="m-4 bg-white border rounded-xl border-solid border-border">
             <div className="flex justify-start">
                 <img src={MEDIA_URL + userImg} alt={firstName} className="h-8 mt-1 ml-1 rounded-full" />
                 <p className="ml-2 font-medium pt-2.5 truncate">{firstName} {lastName}</p>

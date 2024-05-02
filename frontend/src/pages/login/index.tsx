@@ -41,8 +41,8 @@ export default function () {
             <div className="h-dvh flex justify-center items-center flex-col">
                 <div className="w-3/4 bg-white border rounded-xl border-solid border-border">
                     <form onSubmit={onSubmit} className="flex flex-col py-4">
-                        <div className="self-center my-1"><CustomInput placeHolder="Email" onChange={setEmail} /></div>
-                        <div className="self-center my-1"><CustomInput placeHolder="Contraseña" onChange={setPassword} type="password" /></div>
+                        <div className="self-center m-3"><CustomInput placeHolder="Email" onChange={setEmail} /></div>
+                        <div className="self-center m-3"><CustomInput placeHolder="Contraseña" onChange={setPassword} type="password" /></div>
                         <div className="self-center mt-6">
                             <button type="submit" className="border rounded-xl border-solid border-border bg-bg p-1">Iniciar sesión</button>
                         </div>

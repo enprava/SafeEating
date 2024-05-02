@@ -13,10 +13,9 @@ export default function () {
     const [establishmentData, setEstablishmentData]: any | {} = useState(null);
     const [mapData, setMapData]: any | {} = useState(null)
     const [activeTab, setActiveTad]: any | {} = useState(0);
-    // const [location, setLocation] = useState(sessionStorage.getItem('location'))
-    // const [radius, setRadius] = useState(2000);
     const location = sessionStorage.getItem("location");
     const radius = 2000;
+    const loading = <Loading className="justify-center items-center flex" style={{height: window.innerHeight -161}}/>;
 
     function getMapData() {
         const lon: any = location?.split(',')[0] ? location?.split(',')[0]: "-5.987375667032342";
@@ -38,7 +37,7 @@ export default function () {
     function showMap() {
         if (!mapData) {
             getMapData();
-            return <Loading className="m-2 justify-center items-center flex" style={{height: window.innerHeight -129}}/>
+            return loading
         }
         return <MapComponent data={mapData} />
     }
@@ -46,7 +45,7 @@ export default function () {
     function showEstablishmentData() {
         if (!establishmentData) {
             getEstablishmentData();
-            return <Loading className="m-2 justify-center items-center flex" />;
+            return loading;
         }
 
         const establishments: any = [];
@@ -58,10 +57,10 @@ export default function () {
             
     }
     return (
-        <div className="mt-2">
+        <>
             <SearchBar />
             <Tab.Group defaultIndex={0} selectedIndex={activeTab} onChange={setActiveTad}>
-                <Tab.List className="mt-2 flex mx-2 z-50 relative">
+                <Tab.List className="m-4 flex z-50 relative">
                     <Tab className="py-1 bg-bg border border-r-0 rounded-l-xl border-solid border-border text-center w-1/2 ui-selected:bg-selected ui-focus-visible:bg-white">Lista</Tab>
                     <Tab className="py-1 bg-bg border rounded-r-xl border-solid border-border text-center w-1/2 ui-selected:bg-selected">Mapa</Tab>
                 </Tab.List>
@@ -73,6 +72,6 @@ export default function () {
                 </Tab.Panels>
             </Tab.Group>
             <Footer className={activeTab == 0 ? "mt-2" : ""} />
-        </div>
+        </>
     );
 }

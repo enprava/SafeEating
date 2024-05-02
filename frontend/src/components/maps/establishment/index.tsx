@@ -52,7 +52,7 @@ function MapComponent({ data }: args) {
     }
 
     function getMapHeight() {
-        return window.innerHeight - 129;
+        return window.innerHeight - 161;
     }
     return (
         <Map
@@ -63,8 +63,7 @@ function MapComponent({ data }: args) {
             }}
             onLoad={onLoad}
             onClick={onClick}
-            style={{ height: getMapHeight(), marginTop: "0.5rem" }}
-            // mapStyle="https://api.maptiler.com/maps/hybrid/style.json?key=V4dZUoisY0HjkpLsDDcS"
+            style={{ height: getMapHeight()}}
             mapStyle="https://api.maptiler.com/maps/streets-v2/style.json?key=V4dZUoisY0HjkpLsDDcS"
             ref={map}
         >
