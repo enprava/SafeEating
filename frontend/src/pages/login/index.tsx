@@ -5,7 +5,9 @@ import CustomInput from "@/components/input";
 export default function () {
     const [email, setEmail_] = useState(null);
     const [password, setPassword_] = useState(null);
-
+    localStorage.clear();
+    sessionStorage.clear();
+    
     function setEmail(event: any) {
         setEmail_(event.target.value);
     };

@@ -73,7 +73,7 @@ export default function () {
             <p className="m-4 text-2xl font-medium">Más opciones</p>
             <div className="flex justify-center flex-col m-4">
                 <DefaultButton href="/location" text="Cambiar ubicación" className="border-b-0 rounded-b-none"/>
-                <DefaultButton href="#" text="Cambiar contraseña"  className="rounded-t-none"/>
+                <DefaultButton href="/login" text="Cerrar sesión"  className="rounded-t-none"/>
             </div>
             <Footer />
         </>
