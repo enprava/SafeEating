@@ -1,7 +1,6 @@
 import MEDIA_URL from "@/utils/media-url";
-import { GlobeEuropeAfricaIcon, StarIcon, HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
-import { HeartIcon as HeartIconOutline, NoSymbolIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { GlobeEuropeAfricaIcon, StarIcon } from "@heroicons/react/24/solid";
+import { NoSymbolIcon } from "@heroicons/react/24/outline";
 import ListImageSweeper from "../galleries/list";
 
 export type establishmentArgs = {
@@ -13,15 +12,14 @@ export type establishmentArgs = {
     images: [any],
     location: { type: string, coordinates: [number, number] },
     stars: number,
-    liked?: boolean,
     className?: string
 }
 
-function Establishment({ id, name, address, adaptations, images, location, stars, liked = false, className = "" }: establishmentArgs) {
-    const [isLiked, setIsLiked] = useState(liked);
+function Establishment({ id, name, address, adaptations, images, location, stars, className = "" }: establishmentArgs) {
+
 
     function getVeggies() {
-        var vegen = null;
+        let vegen = null;
         for (const adapt of adaptations) {
             if (adapt.name == "Vegano")
                 return <img src={MEDIA_URL + adapt.url} alt={adapt.name} className="mt-1 ml-1 h-12 justify-self-center text-no-veggie" />

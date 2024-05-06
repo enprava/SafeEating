@@ -5,7 +5,7 @@ interface args {
     text: string,
     className?: string,
     isOut?: boolean
-};
+}
 function DefaultButton({ href, text, className = "", isOut=false }: args) {
     return (
         <>

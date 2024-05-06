@@ -10,7 +10,7 @@ import Establishment from "@/components/establishment";
 import Footer from "@/components/footer";
 import LoadMore from "@/components/load-more";
 
-export default function () {
+export default function Home() {
     const establishmentUrl: string = "/establishment/";
     const [establishmentData, setEstablishmentData]: any = useState([]);
     const [lastResponse, _setLastResponse]: any = useState(null);
@@ -40,7 +40,7 @@ export default function () {
                     setLastResponse(data);
                 }
             );
-    };
+    }
 
     function showData() {
         if (establishmentData.length == 0) {

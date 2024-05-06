@@ -8,12 +8,12 @@ import Establishment from "@/components/establishment";
 import MapComponent from "@/components/maps/establishment";
 import LoadMore from "@/components/load-more";
 
-export default function () {
+export default function EstablishmentList() {
     const establishmentUrl: string = "/establishment/";
     const mapUrl: string = "/establishment/mapa/";
     const [establishmentData, setEstablishmentData]: any= useState([]);
-    const [mapData, setMapData]: any | {} = useState(null)
-    const [activeTab, setActiveTad]: any | {} = useState(0);
+    const [mapData, setMapData]: any = useState(null)
+    const [activeTab, setActiveTad]: any = useState(0);
     const location = sessionStorage.getItem("location");
     const radius = 2000;
     const [lastResponse, _setLastResponse]: any = useState(null);
@@ -36,7 +36,7 @@ export default function () {
             .then(
                 (data) => setLastResponse(data)
             );
-    };
+    }
 
     function showMap() {
         if (!mapData) {

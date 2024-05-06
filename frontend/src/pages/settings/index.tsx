@@ -9,7 +9,7 @@ import LoadMore from "@/components/load-more";
 import DefaultButton from "@/components/buttons/default";
 import Loading from "@/components/loading";
 
-export default function () {
+export default function Settings() {
     const userId = sessionStorage.getItem('user');
     const token = sessionStorage.getItem("token");
     const userURL = `/user/${userId}/`;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import URL_API from "@/utils/url-api";
 import CustomInput from "@/components/input";
 
-export default function () {
+export default function Login() {
     const [email, setEmail_] = useState(null);
     const [password, setPassword_] = useState(null);
     localStorage.clear();
@@ -10,7 +10,7 @@ export default function () {
     
     function setEmail(event: any) {
         setEmail_(event.target.value);
-    };
+    }
     function setPassword(event: any) {
         setPassword_(event.target.value);
     }
