@@ -6,9 +6,10 @@ import { useState } from "react";
 interface args {
     checked?: number[],
     readOnly?: boolean,
-};
+}
+
 function AdaptationMenu({ checked = [], readOnly = false }: args) {
-    const [data, setData]: any | {} = useState(null)
+    const [data, setData]: any = useState(null)
 
     function fetchData() {
         fetch(URL_API + "/adaptation")

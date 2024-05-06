@@ -9,7 +9,7 @@ import LoadMore from "@/components/load-more";
 import DefaultButton from "@/components/buttons/default";
 import Loading from "@/components/loading";
 
-export default function () {
+export default function Settings() {
     const userId = sessionStorage.getItem('user');
     const token = sessionStorage.getItem("token");
     const userURL = `/user/${userId}/`;
@@ -17,11 +17,13 @@ export default function () {
     const [userData, setUserData]: any = useState(null);
     const [lastResponse, setLastResponse]: any = useState(null)
     const [ratings, _setRatings]: any = useState([])
-    const loading = <Loading className="justify-center items-center flex" style={{height: (window.innerHeight -153)/2}}/>
+    const [ratingsFetched, setRatingsFetched] = useState(false);
+    const loading = <Loading className="justify-center items-center flex" style={{ height: (window.innerHeight - 153) / 2 }} />
 
     function setRatings(data: any) {
         _setRatings([...ratings, ...data.results]);
         setLastResponse(data);
+        setRatingsFetched(true)
     }
     function fetchRatings(url: string) {
         fetch(url)
@@ -37,7 +39,7 @@ export default function () {
     function showRatings() {
         const url = URL_API + ratingsURL;
         if (ratings.length == 0) {
-            fetchRatings(url)
+            if (!ratingsFetched) fetchRatings(url);
             return loading;
         }
         return <RatingController data={ratings} />
@@ -72,8 +74,8 @@ export default function () {
             <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData} />
             <p className="m-4 text-2xl font-medium">Más opciones</p>
             <div className="flex justify-center flex-col m-4">
-                <DefaultButton href="/location" text="Cambiar ubicación" className="border-b-0 rounded-b-none"/>
-                <DefaultButton href="/login" text="Cerrar sesión"  className="rounded-t-none"/>
+                <DefaultButton href="/location" text="Cambiar ubicación" className="border-b-0 rounded-b-none" />
+                <DefaultButton href="/login" text="Cerrar sesión" className="rounded-t-none" />
             </div>
             <Footer />
         </>

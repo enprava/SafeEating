@@ -16,7 +16,7 @@
 
 type args = {
     className?: string,
-    style?: {}
+    style?: object
 };
 
 function Loading({ className = "", style = {} }: args) {
@@ -32,6 +32,6 @@ function Loading({ className = "", style = {} }: args) {
             </div>
         </div>
     );
-};
+}
 
 export default Loading;

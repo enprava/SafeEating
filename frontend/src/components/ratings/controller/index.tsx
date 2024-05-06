@@ -7,8 +7,7 @@ interface args {
 function RatingController({ data }: args) {
     function getVeggie(rating: any) {
         let result: any = null;
-        console.log(rating)
-        for (let adaptation of rating.adaptations) {
+        for (const adaptation of rating.adaptations) {
             if (adaptation.name == "Vegano")
                 return adaptation
             if (adaptation.name == "Vegetariano")

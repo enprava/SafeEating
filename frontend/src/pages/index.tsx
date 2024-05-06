@@ -10,11 +10,12 @@ import Establishment from "@/components/establishment";
 import Footer from "@/components/footer";
 import LoadMore from "@/components/load-more";
 
-export default function () {
+export default function Home() {
     const establishmentUrl: string = "/establishment/";
     const [establishmentData, setEstablishmentData]: any = useState([]);
     const [lastResponse, _setLastResponse]: any = useState(null);
     const location = sessionStorage.getItem("location");
+    const [establishmentFetched, setEstablishmentFetched] = useState(false);
 
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user")) {
         window.location.href = "/login";
@@ -29,6 +30,7 @@ export default function () {
     function setLastResponse(response: any) {
         _setLastResponse(response);
         setEstablishmentData([...establishmentData, ...response.results])
+        setEstablishmentFetched(true);
     }
     function getData(url: string) {
         fetch(url)
@@ -38,14 +40,13 @@ export default function () {
                     setLastResponse(data);
                 }
             );
-    };
+    }
 
     function showData() {
         if (establishmentData.length == 0) {
             const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
             const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
-
-            getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}`);
+            if (!establishmentFetched) getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}`);
             return <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 356 }} />;
         }
 

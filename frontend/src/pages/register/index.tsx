@@ -2,7 +2,7 @@ import CustomInput from "@/components/input";
 import { useState } from "react";
 import URL_API from "@/utils/url-api";
 
-export default function () {
+export default function Register() {
     const [email, setEmail_] = useState(null);
     const [fistName, setFirstName_] = useState(null);
     const [lastName, setLastName_] = useState(null);
@@ -10,13 +10,13 @@ export default function () {
 
     function setEmail(event: any) {
         setEmail_(event.target.value);
-    };
+    }
     function setPassword(event: any) {
         setPassword_(event.target.value);
     }
     function setFirstName(event: any) {
         setFirstName_(event.target.value);
-    };
+    }
     function setLastName(event: any) {
         setLastName_(event.target.value);
     }

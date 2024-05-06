@@ -9,7 +9,7 @@ import URL_API from "@/utils/url-api";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function () {
+export default function EstablishmentShow() {
     const { id } = useParams();
     const [establishmentData, setEstablishmentData]: any = useState(null)
     const establishmentUrl = "/establishment/" + id?.toString();

@@ -1,7 +1,7 @@
 import LocationComponent from "@/components/maps/location";
 import { useEffect, useState } from "react";
 
-export default function () {
+export default function Location() {
     const [location, setLocation]: any = useState({});
     function componentDidMount() {
         if (navigator.geolocation) {

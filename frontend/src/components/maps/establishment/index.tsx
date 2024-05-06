@@ -6,7 +6,7 @@ import { useRef, useState } from 'react';
 import Establishment, { establishmentArgs } from '@/components/establishment';
 
 interface args {
-    data: {};
+    data: object;
 }
 
 

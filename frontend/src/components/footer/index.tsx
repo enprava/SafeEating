@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon, UserIcon, HomeIcon } from "@heroicons/react/24/out
 
 interface args {
     className?: string
-};
+}
 
 function Footer({ className = ""}: args) {
     return (
