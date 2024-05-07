@@ -14,6 +14,7 @@ export default function Settings() {
     const token = sessionStorage.getItem("token");
     const userURL = `/user/${userId}/`;
     const ratingsURL = `/rating/user/${userId}/`;
+    const adaptationURL = `/user/${userId}/update-adaptation/`
     const [userData, setUserData]: any = useState(null);
     const [lastResponse, setLastResponse]: any = useState(null)
     const [ratings, _setRatings]: any = useState([])
@@ -54,6 +55,18 @@ export default function Settings() {
         }).then((response) => response.json())
             .then((data) => setUserData(data));
     }
+    function onAdaptationClick(adaptationId: number, isChecked: boolean) {
+        console.log("llegooo")
+        fetch(URL_API + adaptationURL, {
+            method: isChecked ? "delete" : "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `token ${token}`
+            },
+            body: JSON.stringify({ adaptation: adaptationId })
+        })
+    }
+
     function showUserData() {
         if (!userData) {
             fetchUserData();
@@ -63,7 +76,7 @@ export default function Settings() {
             <>
                 <Photo fistName={userData.first_name} lastName={userData.last_name} img={userData.pic.url ? MEDIA_URL + userData.pic.url : null} email={userData.email} />
                 <p className="m-4 text-2xl font-medium">Alérgenos</p>
-                <AdaptationMenu />
+                <AdaptationMenu onClick={onAdaptationClick} checked={userData.adaptations.adaptations}/>
             </>
         );
     }

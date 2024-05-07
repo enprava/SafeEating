@@ -6,9 +6,10 @@ import { useState } from "react";
 interface args {
     checked?: number[],
     readOnly?: boolean,
+    onClick?: (adaptationId: number, isChecked: boolean) => void,
 }
 
-function AdaptationMenu({ checked = [], readOnly = false }: args) {
+function AdaptationMenu({ checked = [], readOnly = false, onClick }: args) {
     const [data, setData]: any = useState(null)
 
     function fetchData() {
@@ -30,9 +31,9 @@ function AdaptationMenu({ checked = [], readOnly = false }: args) {
         for (const adapt of data) {
             const isChecked = Boolean(checked.find((adaptionId: number) => adaptionId == adapt.id))
             if (adapt.name === "Vegano" || adapt.name === "Vegetariano") {
-                veggies.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="w-14" isCheckedByDefault={isChecked} readonly={readOnly}/>);
+                veggies.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="w-14" isCheckedByDefault={isChecked} readonly={readOnly} onClick={onClick} adaptationId={adapt.id}/>);
             } else {
-                intolerances.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="h-10 m-1" isCheckedByDefault={isChecked} readonly={readOnly}/>)
+                intolerances.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="h-10 m-1" isCheckedByDefault={isChecked} readonly={readOnly} onClick={onClick} adaptationId={adapt.id}/>)
             }
         }
 

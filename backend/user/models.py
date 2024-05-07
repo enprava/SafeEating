@@ -17,7 +17,6 @@ class UserPic(models.Model):
 class UserAdaptations(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     adaptations = models.ManyToManyField(Adaptation)
-
-
+    
     def __str__(self):
         return f"{self.user.username} Adaptations"
