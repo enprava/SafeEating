@@ -7,9 +7,9 @@ from .models import UserPic, UserAdaptations
 from rest_framework.response import Response
 from .permissions import IsOwner
 from django.shortcuts import get_object_or_404
-
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
+from adaptation.models import Adaptation
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -37,10 +37,26 @@ class UserPicUploadView(views.APIView):
         serializer = UserSerializer(pic.user)
         return Response(serializer.data)
 
-class UserAdaptationsUploadView(generics.CreateAPIView):
+class UserAdaptationsUploadView(generics.UpdateAPIView, generics.DestroyAPIView):
     queryset = UserAdaptations.objects.all()
     serializer_class = UserAdaptationsSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
+
+    def put(self, request, pk):
+        adaptation_id = request.data.get('adaptation')
+        user_adaptations = UserAdaptations.objects.get(user__pk=pk)
+        adaptation = Adaptation.objects.get(pk=adaptation_id)
+        user_adaptations.adaptations.add(adaptation)
+        serializer = UserAdaptationsSerializer(user_adaptations)
+        return Response(serializer.data)
+
+    def delete(self, request, pk):
+        adaptation_id = request.data.get('adaptation')
+        user_adaptations = UserAdaptations.objects.get(user__pk=pk)
+        adaptation = Adaptation.objects.get(pk=adaptation_id)
+        user_adaptations.adaptations.remove(adaptation)
+        serializer = UserAdaptationsSerializer(user_adaptations)
+        return Response(serializer.data)
 
 class UserObtainToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
