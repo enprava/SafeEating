@@ -16,6 +16,7 @@ export default function Home() {
     const [lastResponse, _setLastResponse]: any = useState(null);
     const location = sessionStorage.getItem("location");
     const [establishmentFetched, setEstablishmentFetched] = useState(false);
+    const [showAdaptations, setShowAdaptations]: any = useState(true);
 
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user")) {
         window.location.href = "/login";
@@ -68,15 +69,17 @@ export default function Home() {
     function getMoreData() {
         getData(lastResponse.next);
     }
-
+    function toggleShowAdaptation(){
+        setShowAdaptations(!showAdaptations);
+    }
     return (
         <>
             <a className="m-4 flex" href="/location">
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
             </a>
-            <SearchBar />
-            <AdaptationMenu />
+            <SearchBar toggleMenu={toggleShowAdaptation}/>
+            {showAdaptations && <AdaptationMenu/>}
             <div className="m-4">
                 <p className="font-semibold">Cerca de ti</p>
                 <div className="text-xs flex">

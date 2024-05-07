@@ -7,11 +7,12 @@ import Loading from "@/components/loading";
 import Establishment from "@/components/establishment";
 import MapComponent from "@/components/maps/establishment";
 import LoadMore from "@/components/load-more";
+import AdaptationMenu from "@/components/adaptation-menu";
 
 export default function EstablishmentList() {
     const establishmentUrl: string = "/establishment/";
     const mapUrl: string = "/establishment/mapa/";
-    const [establishmentData, setEstablishmentData]: any= useState([]);
+    const [establishmentData, setEstablishmentData]: any = useState([]);
     const [mapData, setMapData]: any = useState(null)
     const [activeTab, setActiveTad]: any = useState(0);
     const location = sessionStorage.getItem("location");
@@ -19,6 +20,7 @@ export default function EstablishmentList() {
     const [lastResponse, _setLastResponse]: any = useState(null);
     const [establishmentFetched, setEstablishmentFetched] = useState(false);
     const loading = <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 161 }} />;
+    const [showAdaptations, setShowAdaptations]: any = useState(false);
 
 
     function getMapData() {
@@ -30,7 +32,7 @@ export default function EstablishmentList() {
 
     }
 
-    function getEstablishmentData(url:string) {
+    function getEstablishmentData(url: string) {
         fetch(url)
             .then((response) => response.json())
             .then(
@@ -43,7 +45,7 @@ export default function EstablishmentList() {
             getMapData();
             return loading
         }
-        return <MapComponent data={mapData} />
+        return <MapComponent data={mapData} small={showAdaptations}/>
     }
     function setLastResponse(response: any) {
         _setLastResponse(response);
@@ -67,15 +69,19 @@ export default function EstablishmentList() {
         ));
         return (
             <>
-            {establishments}
-            <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData} />
+                {establishments}
+                <LoadMore loadMore={!(lastResponse && lastResponse.next)} getMoreData={getMoreData} />
             </>
         );
 
     }
+    function toggleShowAdaptation() {
+        setShowAdaptations(!showAdaptations);
+    }
     return (
         <>
-            <SearchBar />
+            <SearchBar toggled={false} toggleMenu={toggleShowAdaptation} />
+            {showAdaptations && <AdaptationMenu />}
             <Tab.Group defaultIndex={0} selectedIndex={activeTab} onChange={setActiveTad}>
                 <Tab.List className="m-4 flex z-50 relative">
                     <Tab className="py-1 bg-bg border border-r-0 rounded-l-xl border-solid border-border text-center w-1/2 ui-selected:bg-selected ui-focus-visible:bg-white">Lista</Tab>

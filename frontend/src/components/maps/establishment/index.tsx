@@ -6,11 +6,12 @@ import { useRef, useState } from 'react';
 import Establishment, { establishmentArgs } from '@/components/establishment';
 
 interface args {
-    data: object;
+    data: object,
+    small: boolean,
 }
 
 
-function MapComponent({ data }: args) {
+function MapComponent({ data, small }: args) {
 
     const [selectedEstablishmentArgs, setSelectedEstablishmentArgs]: establishmentArgs | any = useState(null);
     const map = useRef<MapRef>(null);
@@ -52,7 +53,8 @@ function MapComponent({ data }: args) {
     }
 
     function getMapHeight() {
-        return window.innerHeight - 161;
+        const height = small ? 319 : 157;
+        return window.innerHeight - height;
     }
     return (
         <Map
