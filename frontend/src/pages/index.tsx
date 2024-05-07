@@ -69,7 +69,7 @@ export default function Home() {
     function getMoreData() {
         getData(lastResponse.next);
     }
-    function toggleShowAdaptation(){
+    function toggleShowAdaptation() {
         setShowAdaptations(!showAdaptations);
     }
     return (
@@ -78,14 +78,14 @@ export default function Home() {
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
             </a>
-            <SearchBar toggleMenu={toggleShowAdaptation}/>
-            {showAdaptations && <AdaptationMenu/>}
+            <SearchBar toggleMenu={toggleShowAdaptation} />
+            {showAdaptations && <AdaptationMenu />}
             <div className="m-4">
-                <p className="font-semibold">Cerca de ti</p>
-                <div className="text-xs flex">
-                    <a className="mr-2"> Ir al mapa</a>
-                    <GlobeEuropeAfricaIcon className="h-4" />
-                </div>
+                    <p className="font-semibold">Cerca de ti</p>
+                    <a className="text-xs flex" href="/establishments?showMap=true">
+                        <p className="mr-2"> Ir al mapa</p>
+                        <GlobeEuropeAfricaIcon className="h-4" />
+                    </a>
             </div>
 
             <div>
