@@ -4,14 +4,14 @@ import Loading from "@/components/loading";
 import { useState } from "react";
 
 interface args {
-    checked?: number[],
+    checked: Set<number>
     readOnly?: boolean,
     onClick?: (adaptationId: number, isChecked: boolean) => void,
+    toggleChecked?: (adaptationId: number) => void
 }
 
-function AdaptationMenu({ checked = [], readOnly = false, onClick }: args) {
+function AdaptationMenu({ checked, readOnly = false, onClick, toggleChecked = () => {return} }: args) {
     const [data, setData]: any = useState(null)
-
     function fetchData() {
         fetch(URL_API + "/adaptation")
             .then((response) => response.json())
@@ -21,7 +21,7 @@ function AdaptationMenu({ checked = [], readOnly = false, onClick }: args) {
     }
 
     function showData() {
-        if (!data) {
+        if (!data) { 
             fetchData();
             return <Loading className="col-span-4 m-12 justify-center items-center flex" />
         }
@@ -29,11 +29,11 @@ function AdaptationMenu({ checked = [], readOnly = false, onClick }: args) {
         const veggies = [];
         const intolerances = [];
         for (const adapt of data) {
-            const isChecked = Boolean(checked.find((adaptionId: number) => adaptionId == adapt.id))
+            const isChecked = Boolean(Array.from(checked).find((adaptionId: number) => adaptionId == adapt.id))
             if (adapt.name === "Vegano" || adapt.name === "Vegetariano") {
-                veggies.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="w-14" isCheckedByDefault={isChecked} readonly={readOnly} onClick={onClick} adaptationId={adapt.id}/>);
+                veggies.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="w-14" toggleChecked={toggleChecked} isCheckedByDefault={isChecked} readonly={readOnly} onClick={onClick} adaptationId={adapt.id}/>);
             } else {
-                intolerances.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="h-10 m-1" isCheckedByDefault={isChecked} readonly={readOnly} onClick={onClick} adaptationId={adapt.id}/>)
+                intolerances.push(<AdaptationButton img={adapt.url} alt={adapt.name} className="h-10 m-1" toggleChecked={toggleChecked} isCheckedByDefault={isChecked} readonly={readOnly} onClick={onClick} adaptationId={adapt.id}/>)
             }
         }
 

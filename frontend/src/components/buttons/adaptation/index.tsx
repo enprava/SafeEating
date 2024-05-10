@@ -8,23 +8,25 @@ type args = {
     isCheckedByDefault?: boolean,
     readonly: boolean,
     onClick?: (adaptationId: number, isChecked: boolean) => void,
-    adaptationId?: number
+    adaptationId: number,
+    toggleChecked: (adatationId: number) => void,
 }
 
 
-function AdaptationButton({ img, alt, className, isCheckedByDefault = false, readonly, onClick, adaptationId }: args) {
+function AdaptationButton({ img, alt, className, isCheckedByDefault = false, readonly, onClick, adaptationId, toggleChecked }: args) {
     const [isChecked, setIsChecked] = useState(isCheckedByDefault);
 
-    function toggleChecked() {
+    function _toggleChecked() {
         if (!readonly) {
             setIsChecked(!isChecked);
+            toggleChecked(adaptationId);
             if (onClick)
                 onClick(adaptationId!, isChecked);
         }
     }
 
     return (
-        <div className="relative" onClick={toggleChecked}>
+        <div className="relative" onClick={_toggleChecked}>
             <img src={img} className={className} alt={alt} />
             <CheckIcon className={`w-4 text-green absolute bottom-0 opacity-0 ${isChecked ? "opacity-100" : ""}`} style={{ right: -3 }} />
         </div>
