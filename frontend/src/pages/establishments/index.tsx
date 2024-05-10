@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import SearchBar from "@/components/search-bar";
 import { Tab } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import URL_API from "@/utils/url-api";
 import Loading from "@/components/loading";
 import Establishment from "@/components/establishment";
@@ -10,6 +10,11 @@ import LoadMore from "@/components/load-more";
 import AdaptationMenu from "@/components/adaptation-menu";
 
 export default function EstablishmentList() {
+    const userId = sessionStorage.getItem('user');
+    const token = sessionStorage.getItem("token");
+    const userURL = `/user/${userId}/`;
+    const [checked, setChecked] = useState(new Set<number>());
+    const [adaptationsFetched, setAdaptationsFetched] = useState(false);
     const establishmentUrl: string = "/establishment/";
     const mapUrl: string = "/establishment/mapa/";
     const [establishmentData, setEstablishmentData]: any = useState([]);
@@ -17,22 +22,24 @@ export default function EstablishmentList() {
     const params = new URLSearchParams(window.location.search);
     const [activeTab, setActiveTad]: any = useState(params.get("showMap") === "true" ? 1 : 0);
     const location = sessionStorage.getItem("location");
+    const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
+    const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
     const radius = 2000;
     const [lastResponse, _setLastResponse]: any = useState(null);
     const [establishmentFetched, setEstablishmentFetched] = useState(false);
     const loading = <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 161 }} />;
     const [showAdaptations, setShowAdaptations]: any = useState(false);
 
-    function getMapData() {
-        const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
-        const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
-        fetch(`${URL_API}${mapUrl}${lon},${lat},${radius}/`)
+    function getMapData(url: string) {
+
+        fetch(url)
             .then((response) => response.json())
             .then((data) => setMapData(data));
 
     }
 
     function getEstablishmentData(url: string) {
+        console.log(url)
         fetch(url)
             .then((response) => response.json())
             .then(
@@ -42,7 +49,7 @@ export default function EstablishmentList() {
 
     function showMap() {
         if (!mapData) {
-            getMapData();
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}`);
             return loading
         }
         return <MapComponent data={mapData} small={showAdaptations} />
@@ -52,13 +59,29 @@ export default function EstablishmentList() {
         setEstablishmentData([...establishmentData, ...response.results])
         setEstablishmentFetched(true);
     }
-
+    function toggleChecked(adaptationId: number) {
+        checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
+        if (activeTab == 0)
+            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}`);
+        else
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}`)
+        establishmentData.length = 0;
+    }
     function getMoreData() {
         getEstablishmentData(lastResponse.next);
     }
+    function getAdaptations() {
+        fetch(URL_API + userURL, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `token ${token}`
+            }
+        }).then((response) => response.json())
+            .then((data) => { setChecked(new Set(data.adaptations.adaptations)); setAdaptationsFetched(true); });
+    }
     function showEstablishmentData() {
         if (establishmentData.length == 0) {
-            if (!establishmentFetched) getEstablishmentData(URL_API + establishmentUrl);
+            if (!establishmentFetched && adaptationsFetched) getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}`);
             return loading;
         }
 
@@ -75,13 +98,14 @@ export default function EstablishmentList() {
         );
 
     }
+    useEffect(() => getAdaptations());
     function toggleShowAdaptation() {
         setShowAdaptations(!showAdaptations);
     }
     return (
         <>
             <SearchBar toggled={false} toggleMenu={toggleShowAdaptation} />
-            {showAdaptations && <AdaptationMenu />}
+            {(showAdaptations && adaptationsFetched) && <AdaptationMenu checked={checked} toggleChecked={toggleChecked} />}
             <Tab.Group selectedIndex={activeTab} onChange={setActiveTad}>
                 <Tab.List className="m-4 flex z-50 relative">
                     <Tab className="py-1 bg-bg border border-r-0 rounded-l-xl border-solid border-border text-center w-1/2 ui-selected:bg-selected ui-focus-visible:bg-white">Lista</Tab>

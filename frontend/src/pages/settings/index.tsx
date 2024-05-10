@@ -76,7 +76,7 @@ export default function Settings() {
             <>
                 <Photo fistName={userData.first_name} lastName={userData.last_name} img={userData.pic.url ? MEDIA_URL + userData.pic.url : null} email={userData.email} />
                 <p className="m-4 text-2xl font-medium">Alérgenos</p>
-                <AdaptationMenu onClick={onAdaptationClick} checked={userData.adaptations.adaptations}/>
+                <AdaptationMenu onClick={onAdaptationClick} checked={new Set(userData.adaptations.adaptations)}/>
             </>
         );
     }

@@ -11,12 +11,19 @@ import Footer from "@/components/footer";
 import LoadMore from "@/components/load-more";
 
 export default function Home() {
+    const userId = sessionStorage.getItem('user');
+    const token = sessionStorage.getItem("token");
+    const userURL = `/user/${userId}/`;
     const establishmentUrl: string = "/establishment/";
     const [establishmentData, setEstablishmentData]: any = useState([]);
     const [lastResponse, _setLastResponse]: any = useState(null);
-    const location = sessionStorage.getItem("location");
     const [establishmentFetched, setEstablishmentFetched] = useState(false);
     const [showAdaptations, setShowAdaptations]: any = useState(true);
+    const [checked, setChecked] = useState(new Set<number>());
+    const [adaptationsFetched, setAdaptationsFetched] = useState(false);
+    const location = sessionStorage.getItem("location");
+    const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
+    const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
 
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user")) {
         window.location.href = "/login";
@@ -42,12 +49,19 @@ export default function Home() {
                 }
             );
     }
-
+    function getAdaptations() {
+        fetch(URL_API + userURL, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `token ${token}`
+            }
+        }).then((response) => response.json())
+            .then((data) => { setAdaptationsFetched(true); setChecked(new Set(data.adaptations.adaptations)) });
+    }
     function showData() {
         if (establishmentData.length == 0) {
-            const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
-            const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
-            if (!establishmentFetched) getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}`);
+            if (!adaptationsFetched) getAdaptations();
+            if (!establishmentFetched && adaptationsFetched) getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}`);
             return <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 356 }} />;
         }
 
@@ -72,6 +86,11 @@ export default function Home() {
     function toggleShowAdaptation() {
         setShowAdaptations(!showAdaptations);
     }
+    function toggleChecked(adaptationId: number) {
+        checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
+        getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}`);
+        establishmentData.length = 0;
+    }
     return (
         <>
             <a className="m-4 flex" href="/location">
@@ -79,13 +98,13 @@ export default function Home() {
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
             </a>
             <SearchBar toggleMenu={toggleShowAdaptation} />
-            {showAdaptations && <AdaptationMenu />}
+            {(showAdaptations && adaptationsFetched) && <AdaptationMenu checked={checked} toggleChecked={toggleChecked} />}
             <div className="m-4">
-                    <p className="font-semibold">Cerca de ti</p>
-                    <a className="text-xs flex" href="/establishments?showMap=true">
-                        <p className="mr-2"> Ir al mapa</p>
-                        <GlobeEuropeAfricaIcon className="h-4" />
-                    </a>
+                <p className="font-semibold">Cerca de ti</p>
+                <a className="text-xs flex" href="/establishments?showMap=true">
+                    <p className="mr-2"> Ir al mapa</p>
+                    <GlobeEuropeAfricaIcon className="h-4" />
+                </a>
             </div>
 
             <div>

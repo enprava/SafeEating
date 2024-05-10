@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from django.contrib.gis.measure import Distance
 from django.contrib.gis.geos import Point
+from django.db.models import Q
 
 
 class EstablishmentMapView(generics.ListAPIView):
@@ -28,6 +29,16 @@ class EstablishmentMapView(generics.ListAPIView):
             location__distance_lte=(position, Distance(m=radius))
         )
 
+        try:
+            adaptations_param = self.request.GET.get("adaptations")
+            adaptations_ids = list(map(int, adaptations_param.split(",")))
+            querysets = [
+                queryset.filter(adaptation__id=adaptations_id)
+                for adaptations_id in adaptations_ids
+            ]
+            queryset = queryset.intersection(*querysets)
+        except Exception:
+            pass
         return queryset
 
 
@@ -43,17 +54,26 @@ class EstablishmentListView(generics.ListAPIView):
             lat = float(self.request.resolver_match.kwargs["lat"])
             lon = float(self.request.resolver_match.kwargs["lon"])
             radius = int(self.request.resolver_match.kwargs["radius"])
+            radius = radius if radius < 2000 else 2000
+            position = Point(lat, lon, srid=4326)
+            queryset = queryset.filter(
+                location__distance_lte=(position, Distance(m=radius))
+            )
         except Exception:
-            return queryset
-            
-        radius = radius if radius < 2000 else 2000
-        position = Point(lat, lon, srid=4326)
+            pass
 
-        queryset = queryset.filter(
-            location__distance_lte=(position, Distance(m=radius))
-        )
-
+        try:
+            adaptations_param = self.request.GET.get("adaptations")
+            adaptations_ids = list(map(int, adaptations_param.split(",")))
+            querysets = [
+                queryset.filter(adaptation__id=adaptations_id)
+                for adaptations_id in adaptations_ids
+            ]
+            queryset = queryset.intersection(*querysets)
+        except Exception:
+            pass
         return queryset
+
 
 class EstablishmentCreateView(generics.CreateAPIView):
     queryset = Establishment.objects.all()
@@ -77,6 +97,7 @@ class EstablishmentImageUploadView(views.APIView):
         establishment_image.url.save(filename, image.file)
         serializer = EstablishmentSerializer(establishment)
         return Response(serializer.data)
+
 
 class UserRetrieveView(generics.RetrieveAPIView):
     queryset = Establishment.objects.all()
