@@ -98,7 +98,7 @@ export default function EstablishmentList() {
         );
 
     }
-    useEffect(() => getAdaptations(), []);
+    useEffect(() => getAdaptations());
     function toggleShowAdaptation() {
         setShowAdaptations(!showAdaptations);
     }
