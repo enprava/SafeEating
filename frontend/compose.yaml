@@ -1,0 +1,8 @@
+services:
+  front:
+    image: node:21.6.0-bullseye
+    command: sh -c "npm install && npm start --host"
+    working_dir: /usr/src/app
+    network_mode: host
+    volumes:
+      - ".:/usr/src/app"
