@@ -1,5 +1,6 @@
 import type {LayerProps} from 'react-map-gl/maplibre';
 
+const minZoom = 11;
 export const clusterLayer: LayerProps = {
   id: 'cluster',
   type: 'circle',
@@ -10,7 +11,8 @@ export const clusterLayer: LayerProps = {
     'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
     'circle-stroke-width': 3,
     'circle-stroke-color': '#9D9D9D'
-  }
+  },
+  minzoom: minZoom,
 };
 
 export const clusterCountLayer: LayerProps = {
@@ -21,7 +23,8 @@ export const clusterCountLayer: LayerProps = {
   layout: {
     'text-field': '{point_count_abbreviated}',
     'text-size': 12
-  }
+  },
+  minzoom: minZoom,
 };
 
 export const unclusteredPointLayer: LayerProps = {
@@ -32,5 +35,6 @@ export const unclusteredPointLayer: LayerProps = {
     layout: {
         "icon-image": "custom-dot",
         "icon-size": 0.08
-    }
+    },
+  minzoom: minZoom, 
 };
