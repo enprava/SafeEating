@@ -48,7 +48,9 @@ export default function EstablishmentList() {
     }
 
     function showMap() {
-        if (!mapData) {
+        if(!adaptationsFetched)
+            getAdaptations();
+        if (!mapData && adaptationsFetched) {
             getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}`);
             return loading
         }
@@ -80,6 +82,8 @@ export default function EstablishmentList() {
             .then((data) => { setChecked(new Set(data.adaptations.adaptations)); setAdaptationsFetched(true); });
     }
     function showEstablishmentData() {
+        if(!adaptationsFetched)
+            getAdaptations();
         if (establishmentData.length == 0) {
             if (!establishmentFetched && adaptationsFetched) getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}`);
             return loading;
@@ -98,7 +102,6 @@ export default function EstablishmentList() {
         );
 
     }
-    useEffect(() => getAdaptations());
     function toggleShowAdaptation() {
         setShowAdaptations(!showAdaptations);
     }
