@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import SearchBar from "@/components/search-bar";
 import { Tab } from "@headlessui/react";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import URL_API from "@/utils/url-api";
 import Loading from "@/components/loading";
 import Establishment from "@/components/establishment";
