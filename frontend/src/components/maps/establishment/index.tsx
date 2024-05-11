@@ -1,4 +1,4 @@
-import Map, { GeoJSONSource, MapRef } from 'react-map-gl/maplibre';
+import Map, { GeoJSONSource, MapRef, Marker, Popup } from 'react-map-gl/maplibre';
 import Source from 'react-map-gl/dist/esm/components/source';
 import Layer from 'react-map-gl/dist/esm/components/layer';
 import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from "./layers";
@@ -8,10 +8,12 @@ import Establishment, { establishmentArgs } from '@/components/establishment';
 interface args {
     data: object,
     small: boolean,
+    lat: number,
+    lon: number,
 }
 
 
-function MapComponent({ data, small }: args) {
+function MapComponent({ data, small, lat, lon }: args) {
 
     const [selectedEstablishmentArgs, setSelectedEstablishmentArgs]: establishmentArgs | any = useState(null);
     const map = useRef<MapRef>(null);
@@ -48,7 +50,7 @@ function MapComponent({ data, small }: args) {
         });
     }
 
-    function onClick(){
+    function onClick() {
         setSelectedEstablishmentArgs(null);
     }
 
@@ -59,13 +61,14 @@ function MapComponent({ data, small }: args) {
     return (
         <Map
             initialViewState={{
-                longitude: -5.97317,
-                latitude: 37.38283,
-                zoom: 7
+                longitude: lon,
+                latitude: lat,
+                zoom: 12,        
             }}
+            minZoom={11}
             onLoad={onLoad}
             onClick={onClick}
-            style={{ height: getMapHeight()}}
+            style={{ height: getMapHeight() }}
             mapStyle="https://api.maptiler.com/maps/streets-v2/style.json?key=V4dZUoisY0HjkpLsDDcS"
             ref={map}
         >
@@ -83,6 +86,11 @@ function MapComponent({ data, small }: args) {
             {selectedEstablishmentArgs &&
                 <Establishment {...selectedEstablishmentArgs} />
             }
+            <Marker latitude={lat} longitude={lon}>
+            </Marker>
+            <Popup latitude={lat} longitude={lon}>
+                Tu posicion
+            </Popup>
         </Map>
     );
 }

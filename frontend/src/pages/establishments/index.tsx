@@ -22,8 +22,8 @@ export default function EstablishmentList() {
     const params = new URLSearchParams(window.location.search);
     const [activeTab, setActiveTad]: any = useState(params.get("showMap") === "true" ? 1 : 0);
     const location = sessionStorage.getItem("location");
-    const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
-    const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
+    const lon: string = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
+    const lat: string = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
     const radius = 2000;
     const [lastResponse, _setLastResponse]: any = useState(null);
     const [establishmentFetched, setEstablishmentFetched] = useState(false);
@@ -54,7 +54,7 @@ export default function EstablishmentList() {
             getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}`);
             return loading
         }
-        return <MapComponent data={mapData} small={showAdaptations} />
+        return <MapComponent data={mapData} small={showAdaptations} lat={parseFloat(lat)} lon={parseFloat(lon)}/>
     }
     function setLastResponse(response: any) {
         _setLastResponse(response);
