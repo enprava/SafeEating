@@ -29,6 +29,7 @@ export default function EstablishmentList() {
     const [establishmentFetched, setEstablishmentFetched] = useState(false);
     const loading = <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 161 }} />;
     const [showAdaptations, setShowAdaptations]: any = useState(false);
+    const [searchInput, _setSearchInput] = useState("");
 
     function getMapData(url: string) {
 
@@ -51,7 +52,7 @@ export default function EstablishmentList() {
         if(!adaptationsFetched)
             getAdaptations();
         if (!mapData && adaptationsFetched) {
-            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}`);
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
             return loading
         }
         return <MapComponent data={mapData} small={showAdaptations} lat={parseFloat(lat)} lon={parseFloat(lon)}/>
@@ -64,9 +65,9 @@ export default function EstablishmentList() {
     function toggleChecked(adaptationId: number) {
         checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
         if (activeTab == 0)
-            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}`);
+            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
         else
-            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}`)
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}1`)
         establishmentData.length = 0;
     }
     function getMoreData() {
@@ -85,7 +86,7 @@ export default function EstablishmentList() {
         if(!adaptationsFetched)
             getAdaptations();
         if (establishmentData.length == 0) {
-            if (!establishmentFetched && adaptationsFetched) getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}`);
+            if (!establishmentFetched && adaptationsFetched) getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
             return loading;
         }
 
@@ -105,9 +106,17 @@ export default function EstablishmentList() {
     function toggleShowAdaptation() {
         setShowAdaptations(!showAdaptations);
     }
+    function setSearchInput(event: any){
+        _setSearchInput(event.target.value);
+        if (activeTab == 0)
+            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`);
+        else
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`)
+        establishmentData.length = 0;
+    }
     return (
         <>
-            <SearchBar toggled={false} toggleMenu={toggleShowAdaptation} />
+            <SearchBar toggled={false} toggleMenu={toggleShowAdaptation} onChange={setSearchInput}/>
             {(showAdaptations && adaptationsFetched) && <AdaptationMenu checked={checked} toggleChecked={toggleChecked} />}
             <Tab.Group selectedIndex={activeTab} onChange={setActiveTad}>
                 <Tab.List className="m-4 flex z-50 relative">
