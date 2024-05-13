@@ -24,6 +24,7 @@ export default function Home() {
     const location = sessionStorage.getItem("location");
     const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
     const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
+    const [searchInput, _setSearchInput] = useState("");
 
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user")) {
         window.location.href = "/login";
@@ -61,7 +62,7 @@ export default function Home() {
     function showData() {
         if (establishmentData.length == 0) {
             if (!adaptationsFetched) getAdaptations();
-            if (!establishmentFetched && adaptationsFetched) getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}`);
+            if (!establishmentFetched && adaptationsFetched) getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
             return <Loading className="justify-center items-center flex" style={{ height: window.innerHeight - 356 }} />;
         }
 
@@ -88,7 +89,12 @@ export default function Home() {
     }
     function toggleChecked(adaptationId: number) {
         checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
-        getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}`);
+        getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
+        establishmentData.length = 0;
+    }
+    function setSearchInput(event: any){
+        _setSearchInput(event.target.value);
+        getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`);
         establishmentData.length = 0;
     }
     return (
@@ -97,7 +103,7 @@ export default function Home() {
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
                 <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
             </a>
-            <SearchBar toggleMenu={toggleShowAdaptation} />
+            <SearchBar toggleMenu={toggleShowAdaptation} onChange={setSearchInput}/>
             {(showAdaptations && adaptationsFetched) && <AdaptationMenu checked={checked} toggleChecked={toggleChecked} />}
             <div className="m-4">
                 <p className="font-semibold">Cerca de ti</p>

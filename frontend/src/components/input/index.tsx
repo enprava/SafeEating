@@ -4,7 +4,7 @@ interface args {
     placeHolder: string,
     className?: string,
     onChange?: any,
-    type?: string
+    type?: string,
 }
 function CustomInput({ placeHolder, className = "px-2", onChange, type = "text" }: args) {
     return (

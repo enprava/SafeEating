@@ -28,7 +28,11 @@ class EstablishmentMapView(generics.ListAPIView):
         queryset = queryset.filter(
             location__distance_lte=(position, Distance(m=radius))
         )
-
+        try:
+            search_param = self.request.GET.get("search")
+            queryset = queryset.filter(name__icontains=search_param)
+        except Exception:
+            pass
         try:
             adaptations_param = self.request.GET.get("adaptations")
             adaptations_ids = list(map(int, adaptations_param.split(",")))
@@ -39,6 +43,7 @@ class EstablishmentMapView(generics.ListAPIView):
             queryset = queryset.intersection(*querysets)
         except Exception:
             pass
+
         return queryset
 
 
@@ -63,6 +68,12 @@ class EstablishmentListView(generics.ListAPIView):
             pass
 
         try:
+            search_param = self.request.GET.get("search")
+            queryset = queryset.filter(name__icontains=search_param)
+        except Exception:
+            pass
+
+        try:
             adaptations_param = self.request.GET.get("adaptations")
             adaptations_ids = list(map(int, adaptations_param.split(",")))
             querysets = [
@@ -72,6 +83,7 @@ class EstablishmentListView(generics.ListAPIView):
             queryset = queryset.intersection(*querysets)
         except Exception:
             pass
+
         return queryset
 
 
