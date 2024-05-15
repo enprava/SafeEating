@@ -30,9 +30,10 @@ class RatingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
         fields = "__all__"
+        read_only_fields = ['adaptation', 'userData']
         extra_kwargs = {
-            "adaptation": {"write_only": True},
-            "userData": {"write_only": True},
+            "establishment": {"write_only": True},
+            "user": {"write_only": True},
         }
 
 
