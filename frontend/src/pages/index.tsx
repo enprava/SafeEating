@@ -93,8 +93,9 @@ export default function Home() {
         establishmentData.length = 0;
     }
     function setSearchInput(event: any){
-        _setSearchInput(event.target.value);
-        getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`);
+        const text = event.target.value.trim();
+        _setSearchInput(text);
+        getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${text}`);
         establishmentData.length = 0;
     }
     return (

@@ -108,11 +108,12 @@ export default function EstablishmentList() {
         setShowAdaptations(!showAdaptations);
     }
     function setSearchInput(event: any){
+        const text = event.target.value.trim();
         if (activeTab == 0)
-            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`);
+            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${text}`);
         else
-            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`)
-        _setSearchInput(event.target.value);
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${text}`)
+        _setSearchInput(text);
         establishmentData.length = 0;
     }
     return (
