@@ -25,6 +25,8 @@ export default function Home() {
     const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
     const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
     const [searchInput, _setSearchInput] = useState("");
+    const [geoLocation, setGeoLocation] = useState(sessionStorage.getItem("geolocation"));
+    const [geoLocationFetching, setGeoLocationFetching] = useState(false);
 
     if (!sessionStorage.getItem("token") || !sessionStorage.getItem("user")) {
         window.location.href = "/login";
@@ -92,19 +94,39 @@ export default function Home() {
         getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
         establishmentData.length = 0;
     }
-    function setSearchInput(event: any){
+    function setSearchInput(event: any) {
         const text = event.target.value.trim();
         _setSearchInput(text);
         getData(`${URL_API}${establishmentUrl}${lon},${lat},${2000}/?adaptations=${Array.from(checked).join(",")}&search=${text}`);
         establishmentData.length = 0;
     }
-    return (
-        <>
+
+    function fetchGeoLocation() {
+        if (geoLocationFetching) return;
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then((data) => {
+                sessionStorage.setItem("geolocation", data.display_name)
+                setGeoLocation(data.display_name); 
+                setGeoLocationFetching(true)});
+    }
+
+    function showGeoLocation() {
+        if (!geoLocation) {
+            fetchGeoLocation()
+            return <Loading className="flex justify-center m-4" />;
+        }
+        return (
             <a className="m-4 flex" href="/location">
                 <img src={locationPin} alt="Location Icon" className="h-6 mr-2" />
-                <p className="font-semibold pt-1 truncate">Avenida de la Reina Mercedes, Sevilla</p>
+                <p className="font-semibold pt-1 truncate">{geoLocation}</p>
             </a>
-            <SearchBar toggleMenu={toggleShowAdaptation} onChange={setSearchInput}/>
+        );
+    }
+    return (
+        <>
+            {showGeoLocation()}
+            <SearchBar toggleMenu={toggleShowAdaptation} onChange={setSearchInput} />
             {(showAdaptations && adaptationsFetched) && <AdaptationMenu checked={checked} toggleChecked={toggleChecked} />}
             <div className="m-4">
                 <p className="font-semibold">Cerca de ti</p>

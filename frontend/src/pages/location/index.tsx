@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Location() {
     const [location, setLocation]: any = useState({});
+    sessionStorage.removeItem("geolocation");
     function componentDidMount() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
