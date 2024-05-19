@@ -64,10 +64,11 @@ export default function EstablishmentList() {
     }
     function toggleChecked(adaptationId: number) {
         checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
+        console.log(searchInput)
         if (activeTab == 0)
             getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
         else
-            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}1`)
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`)
         establishmentData.length = 0;
     }
     function getMoreData() {
@@ -107,11 +108,12 @@ export default function EstablishmentList() {
         setShowAdaptations(!showAdaptations);
     }
     function setSearchInput(event: any){
-        _setSearchInput(event.target.value);
+        const text = event.target.value.trim();
         if (activeTab == 0)
-            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`);
+            getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${text}`);
         else
-            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${event.target.value}`)
+            getMapData(`${URL_API}${mapUrl}${lon},${lat},${radius}/?adaptations=${Array.from(checked).join(",")}&search=${text}`)
+        _setSearchInput(text);
         establishmentData.length = 0;
     }
     return (

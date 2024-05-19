@@ -6,8 +6,9 @@ from rest_framework.parsers import MultiPartParser
 from rest_framework import permissions
 from rest_framework.response import Response
 from .paginations import RatingsPagination
+from .permissions import IsOwner, ItIs
 
-class RatingCreateListView(generics.ListCreateAPIView):
+class RatingListView(generics.ListAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
     renderer_classes = [JSONRenderer]
@@ -23,10 +24,17 @@ class RatingCreateListView(generics.ListCreateAPIView):
             result = Rating.objects.filter(user_id=user_pk)
         return result
 
+class RatingCreateView(generics.CreateAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+    renderer_classes = [JSONRenderer]
+    permission_classes = [ItIs]
+    pagination_class = RatingsPagination
+
 
 class RatingImageUploadView(views.APIView):
     parser_classes = [MultiPartParser]
-
+    permission_classes = [IsOwner]
     def post(self, request, pk):
         image = request.FILES["image"]
         rating = Rating.objects.get(pk=pk)

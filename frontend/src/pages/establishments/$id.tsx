@@ -52,7 +52,6 @@ export default function EstablishmentShow() {
     function getMoreData() {
         fetchRatings(lastResponse.next)
     }
-    // href={`https://www.google.com/maps?q=${location.coordinates[1]},${location.coordinates[0]}`}
     return (
         <>
             <Header title="" />
