@@ -63,7 +63,7 @@ function MapComponent({ data, small, lat, lon }: args) {
             initialViewState={{
                 longitude: lon,
                 latitude: lat,
-                zoom: 12,        
+                zoom: 12,
             }}
             minZoom={11}
             onLoad={onLoad}
@@ -88,9 +88,6 @@ function MapComponent({ data, small, lat, lon }: args) {
             }
             <Marker latitude={lat} longitude={lon}>
             </Marker>
-            <Popup latitude={lat} longitude={lon}>
-                Tu posicion
-            </Popup>
         </Map>
     );
 }
