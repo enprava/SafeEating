@@ -9,10 +9,10 @@ import { useState } from "react";
 import Establishment from "@/components/establishment";
 import Footer from "@/components/footer";
 import LoadMore from "@/components/load-more";
+import getCredentials from "@/utils/get-crendetials";
 
 export default function Home() {
-    const userId = sessionStorage.getItem('user');
-    const token = sessionStorage.getItem("token");
+    const [userId, token, location] = getCredentials();
     const userURL = `/user/${userId}/`;
     const establishmentUrl: string = "/establishment/";
     const [establishmentData, setEstablishmentData]: any = useState([]);
@@ -21,7 +21,6 @@ export default function Home() {
     const [showAdaptations, setShowAdaptations]: any = useState(true);
     const [checked, setChecked] = useState(new Set<number>());
     const [adaptationsFetched, setAdaptationsFetched] = useState(false);
-    const location = sessionStorage.getItem("location");
     const lon: any = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
     const lat: any = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
     const [searchInput, _setSearchInput] = useState("");
@@ -107,8 +106,9 @@ export default function Home() {
             .then(response => response.json())
             .then((data) => {
                 sessionStorage.setItem("geolocation", data.display_name)
-                setGeoLocation(data.display_name); 
-                setGeoLocationFetching(true)});
+                setGeoLocation(data.display_name);
+                setGeoLocationFetching(true)
+            });
     }
 
     function showGeoLocation() {

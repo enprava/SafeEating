@@ -8,10 +8,10 @@ import Establishment from "@/components/establishment";
 import MapComponent from "@/components/maps/establishment";
 import LoadMore from "@/components/load-more";
 import AdaptationMenu from "@/components/adaptation-menu";
+import getCredentials from "@/utils/get-crendetials";
 
 export default function EstablishmentList() {
-    const userId = sessionStorage.getItem('user');
-    const token = sessionStorage.getItem("token");
+    const [userId, token, location] = getCredentials();
     const userURL = `/user/${userId}/`;
     const [checked, setChecked] = useState(new Set<number>());
     const [adaptationsFetched, setAdaptationsFetched] = useState(false);
@@ -21,7 +21,6 @@ export default function EstablishmentList() {
     const [mapData, setMapData]: any = useState(null);
     const params = new URLSearchParams(window.location.search);
     const [activeTab, setActiveTad]: any = useState(params.get("showMap") === "true" ? 1 : 0);
-    const location = sessionStorage.getItem("location");
     const lon: string = location?.split(',')[0] ? location?.split(',')[0] : "-5.987375667032342";
     const lat: string = location?.split(',')[1] ? location?.split(',')[1] : "37.3930443446";
     const radius = 2000;

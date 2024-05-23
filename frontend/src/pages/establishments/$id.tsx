@@ -5,15 +5,16 @@ import ShowImageSweeper from "@/components/galleries/show";
 import Header from "@/components/header";
 import LoadMore from "@/components/load-more";
 import RatingController from "@/components/ratings/controller";
+import getCredentials from "@/utils/get-crendetials";
 import URL_API from "@/utils/url-api";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 export default function EstablishmentShow() {
+    const [userId, token, location] = getCredentials();
     const { id } = useParams();
     const [establishmentData, setEstablishmentData]: any = useState(null)
     const establishmentUrl = "/establishment/" + id?.toString();
-    const token = sessionStorage.getItem("token");
     const [lastResponse, setLastResponse]: any = useState(null)
     const [ratings, _setRatings]: any = useState([])
     const ratingsURL = `/rating/establishment/${id?.toString()}/`;
@@ -46,7 +47,6 @@ export default function EstablishmentShow() {
             fetchRatings(url)
             return <>Loading</>;
         }
-        return <RatingController data={ratings} />
 
     }
     function getMoreData() {
