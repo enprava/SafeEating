@@ -1,10 +1,15 @@
-import Rating from "../rating";
+import CreateRating from "@/components/ratings/create";
+import Rating from "@/components/ratings/rating";
 
 interface args {
-    data: any
+    data: any,
+    createRating?: boolean,
+    userId?: string,
+    token?: string,
+    establishmentId?: string,
 }
 
-function RatingController({ data }: args) {
+function RatingController({ data, createRating = false, userId = "", token = "", establishmentId="" }: args) {
     function getVeggie(rating: any) {
         let result: any = null;
         for (const adaptation of rating.adaptations) {
@@ -18,6 +23,7 @@ function RatingController({ data }: args) {
     return (
         <>
             <p className="m-4 mb-2 text-2xl font-medium" >Valoraciones</p>
+            {createRating && <CreateRating userId={userId} token={token} establishmentId={establishmentId}/>}
             {data.map((rating: any) => (
                 <Rating
                     userImg={rating.userData.pic.url}
