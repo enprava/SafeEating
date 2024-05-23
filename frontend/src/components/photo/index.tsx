@@ -28,7 +28,7 @@ function Photo({ fistName, lastName, img, email }: args) {
                 "Authorization": `token ${token}`
             }
         });
-        window.location.href = '/settings'
+        window.location.reload();
     }  
 
     return (
