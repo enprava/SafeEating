@@ -5,15 +5,17 @@ import ShowImageSweeper from "@/components/galleries/show";
 import Header from "@/components/header";
 import LoadMore from "@/components/load-more";
 import RatingController from "@/components/ratings/controller";
+import getCredentials from "@/utils/get-crendetials";
 import URL_API from "@/utils/url-api";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
+
 export default function EstablishmentShow() {
+    const [userId, token] = getCredentials();
     const { id } = useParams();
     const [establishmentData, setEstablishmentData]: any = useState(null)
     const establishmentUrl = "/establishment/" + id?.toString();
-    const token = sessionStorage.getItem("token");
     const [lastResponse, setLastResponse]: any = useState(null)
     const [ratings, _setRatings]: any = useState([])
     const ratingsURL = `/rating/establishment/${id?.toString()}/`;
@@ -46,8 +48,7 @@ export default function EstablishmentShow() {
             fetchRatings(url)
             return <>Loading</>;
         }
-        return <RatingController data={ratings} />
-
+        return <RatingController data={ratings} createRating={true} userId={userId} token={token} establishmentId={id}/>
     }
     function getMoreData() {
         fetchRatings(lastResponse.next)
@@ -61,8 +62,17 @@ export default function EstablishmentShow() {
                     <ShowImageSweeper images={establishmentData.images} />
                 </div>
                 <div className="flex justify-center m-4 flex-col">
-                    <DefaultButton href={`https://www.google.com/maps?q=${establishmentData.location.coordinates[1]},${establishmentData.location.coordinates[0]}`} text={establishmentData.address} className="border-b-0 rounded-b-none" isOut={true} />
-                    <DefaultButton href={"https://" + establishmentData.website} text="Sitio web" className="rounded-t-none" isOut={true} />
+                    <DefaultButton
+                        href={`https://www.google.com/maps?q=${establishmentData.location.coordinates[1]},${establishmentData.location.coordinates[0]}`}
+                        text={establishmentData.address}
+                        className="border-b-0 rounded-b-none"
+                        isOut={true} />
+
+                    <DefaultButton
+                        href={"https://" + establishmentData.website}
+                        text="Sitio web"
+                        className="rounded-t-none"
+                        isOut={true} />
                 </div>
                 <p className="m-4 text-2xl font-medium">Alérgenos</p>
                 <AdaptationMenu checked={establishmentData.adaptations.map((adaption: any) => adaption.id)} readOnly={true} />

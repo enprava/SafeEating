@@ -151,7 +151,7 @@ class Command(BaseCommand):
                 rating_image = RatingImage.objects.create(rating=rating)
                 image = random.choice(rating_images_filenames)
                 extension = image.split(".")[-1]
-                n_images = prob % 5
+                n_images = 1
                 for _ in range(n_images):
                     with open(
                         os.path.join(

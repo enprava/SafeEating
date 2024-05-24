@@ -8,10 +8,10 @@ import Footer from "@/components/footer";
 import LoadMore from "@/components/load-more";
 import DefaultButton from "@/components/buttons/default";
 import Loading from "@/components/loading";
+import getCredentials from "@/utils/get-crendetials";
 
 export default function Settings() {
-    const userId = sessionStorage.getItem('user');
-    const token = sessionStorage.getItem("token");
+    const [userId, token] = getCredentials();
     const userURL = `/user/${userId}/`;
     const ratingsURL = `/rating/user/${userId}/`;
     const adaptationURL = `/user/${userId}/update-adaptation/`
@@ -76,7 +76,7 @@ export default function Settings() {
             <>
                 <Photo fistName={userData.first_name} lastName={userData.last_name} img={userData.pic.url ? MEDIA_URL + userData.pic.url : null} email={userData.email} />
                 <p className="m-4 text-2xl font-medium">Alérgenos</p>
-                <AdaptationMenu onClick={onAdaptationClick} checked={new Set(userData.adaptations.adaptations)}/>
+                <AdaptationMenu onClick={onAdaptationClick} checked={new Set(userData.adaptations.adaptations)} />
             </>
         );
     }

@@ -21,6 +21,9 @@ export default {
       "no-veggie": "#b9c1c",
       "like": "#dc2626",
       "black": colors.black,
+      "h1-gray": "#5F5F5F",
+      "button": "#DFDFDF",
+      "semi-white": "#F8F8F8"
     }
   },
   plugins: [

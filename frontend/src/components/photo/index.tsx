@@ -19,7 +19,6 @@ function Photo({ fistName, lastName, img, email }: args) {
             return;
         }
         const image = event.target.files[0];
-        // console.log(image);
         const formData = new FormData()
         formData.append("image", image);
         await fetch(URL_API + `/user/${user}/upload-pic/`, {
@@ -29,7 +28,7 @@ function Photo({ fistName, lastName, img, email }: args) {
                 "Authorization": `token ${token}`
             }
         });
-        window.location.href = '/settings'
+        window.location.reload();
     }  
 
     return (

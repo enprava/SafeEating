@@ -28,7 +28,7 @@ function AdaptationButton({ img, alt, className, isCheckedByDefault = false, rea
     return (
         <div className="relative" onClick={_toggleChecked}>
             <img src={img} className={className} alt={alt} />
-            <CheckIcon className={`w-4 text-green absolute bottom-0 opacity-0 ${isChecked ? "opacity-100" : ""}`} style={{ right: -3 }} />
+            <CheckIcon className={`w-6 text-green absolute bottom-0 opacity-0 ${isChecked ? "opacity-100" : ""}`} style={{ right: -3 }} />
         </div>
     );
 
