@@ -1,4 +1,4 @@
-import Map, { GeoJSONSource, MapRef, Marker, Popup } from 'react-map-gl/maplibre';
+import Map, { GeoJSONSource, MapRef, Marker } from 'react-map-gl/maplibre';
 import Source from 'react-map-gl/dist/esm/components/source';
 import Layer from 'react-map-gl/dist/esm/components/layer';
 import { clusterLayer, clusterCountLayer, unclusteredPointLayer } from "./layers";
