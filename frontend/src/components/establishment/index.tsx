@@ -57,7 +57,6 @@ function Establishment({ id, name, address, adaptations, images, location, stars
             );
         }
 
-
         return (
             <>
                 <div className="flex justify-around items-center">
@@ -69,7 +68,7 @@ function Establishment({ id, name, address, adaptations, images, location, stars
     return (
         <div className={"m-4 border rounded-xl border-solid border-border drop-shadow-2xl h-40 bg-white pb-5 " + className} >
             <div className="flex flex-row h-4/6 w-full relative overflow-hidden">
-                <ListImageSweeper images={images} href={"/establishments/" + id.toString()} />
+                <ListImageSweeper images={[images[0]]} href={"/establishments/" + id.toString()} />
             </div>
             <a href={"/establishments/" + id.toString()}>
                 <div className="grid grid-cols-2">
