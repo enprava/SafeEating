@@ -33,7 +33,7 @@ export default function Register() {
             body: JSON.stringify({ "username": email, "email": email, "first_name": fistName, "last_name": lastName, "password": password })
         });
         if (!response.ok) {
-            console.log(response)
+            console.error(response)
             return;
         }
         window.location.href = "/login";

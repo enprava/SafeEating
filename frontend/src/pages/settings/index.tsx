@@ -56,7 +56,6 @@ export default function Settings() {
             .then((data) => setUserData(data));
     }
     function onAdaptationClick(adaptationId: number, isChecked: boolean) {
-        console.log("llegooo")
         fetch(URL_API + adaptationURL, {
             method: isChecked ? "delete" : "put",
             headers: {

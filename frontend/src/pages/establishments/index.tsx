@@ -39,7 +39,6 @@ export default function EstablishmentList() {
     }
 
     function getEstablishmentData(url: string) {
-        console.log(url)
         fetch(url)
             .then((response) => response.json())
             .then(
@@ -63,7 +62,6 @@ export default function EstablishmentList() {
     }
     function toggleChecked(adaptationId: number) {
         checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
-        console.log(searchInput)
         if (activeTab == 0)
             getEstablishmentData(`${URL_API}${establishmentUrl}?adaptations=${Array.from(checked).join(",")}&search=${searchInput}`);
         else

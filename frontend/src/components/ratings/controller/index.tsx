@@ -48,7 +48,7 @@ function RatingController({ data, createRating = false, userId = "", token = "",
                     userImg={rating.userData.pic.url}
                     firstName={rating.userData.first_name}
                     lastName={rating.userData.last_name}
-                    intolerances={rating.adaptations.filter((adaptation: any) => (adaptation.name != "Vegano" || adaptation.name != "Vegetariano"))}
+                    intolerances={rating.adaptations.filter((adaptation: any) => !(adaptation.name == "Vegano" || adaptation.name == "Vegetariano"))}
                     veggie={getVeggie(rating)}
                     stars={rating.stars}
                     body={rating.body}

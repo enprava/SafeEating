@@ -13,7 +13,7 @@ interface args {
 function CreateRating({ userId, token, establishmentId }: args) {
     const [stars, setStars] = useState(2);
     const [ratingBody, setRatingBody] = useState("");
-    const checked = new Set<number>();
+    const [checked, setChecked] = useState(new Set<number>());
     const [imageForm, setImageForm]: any = useState(null);
 
     function showStars() {
@@ -21,7 +21,6 @@ function CreateRating({ userId, token, establishmentId }: args) {
         let tag;
         const className = "h-7 text-star"
         for (let i = 0; i < 5; i++) {
-            console.log('hola')
             tag = stars >= i ? <StarIconSolid className={className} onClick={() => setStars(i)} /> : <StarIconOutline className={className} onClick={() => setStars(i)} />;
             result.push(tag);
         }
@@ -37,7 +36,7 @@ function CreateRating({ userId, token, establishmentId }: args) {
             body: ratingBody,
             user: parseInt(userId),
             establishment: parseInt(establishmentId),
-            stars: stars,
+            stars: stars + 1,
             adaptation: Array.from(checked),
         }
         let ratingId: any;
@@ -63,6 +62,7 @@ function CreateRating({ userId, token, establishmentId }: args) {
 
     function toggleChecked(adaptationId: number) {
         checked.has(adaptationId) ? checked.delete(adaptationId) : checked.add(adaptationId);
+        setChecked(checked)
     }
 
     function getImage(event: any) {
