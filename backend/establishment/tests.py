@@ -31,8 +31,9 @@ def test_get_establishment_view(client, establishment):
     assert len(results) == 1
     assert establishment.get("id") == 1
     assert establishment.get("name") == establishment_data.get("name")
-    assert Point(establishment.get("location").get("coordinates")).equals_identical(
-        establishment_data.get("location")
+    assert (
+        Point(establishment.get("location").get("coordinates")).coords
+        == establishment_data.get("location").coords
     )
     assert establishment.get("address") == establishment_data.get("address")
     assert establishment.get("website") == establishment_data.get("website")
@@ -47,12 +48,12 @@ def test_get_establishment_map_view(client, establishment):
     assert response.status_code == 200
     assert len(features) == 1
     assert establishment.get("id") == 2
-    assert establishment.get("properties").get("name") == establishment_data.get(
-        "name"
+    assert establishment.get("properties").get("name") == establishment_data.get("name")
+    assert (
+        Point(establishment.get("geometry").get("coordinates")).coords
+        == establishment_data.get("location").coords
     )
-    assert Point(establishment.get("geometry").get("coordinates")).equals_identical(
-        establishment_data.get("location")
-    )
+
     assert establishment.get("properties").get("address") == establishment_data.get(
         "address"
     )
@@ -68,11 +69,13 @@ def test_get_establishment_retrieve_view(client, establishment):
     assert response.status_code == 200
     assert body.get("id") == 3
     assert body.get("name") == establishment_data.get("name")
-    assert Point(body.get("location").get("coordinates")).equals_identical(
-        establishment_data.get("location")
+    assert (
+        Point(body.get("location").get("coordinates")).coords
+        == establishment_data.get("location").coords
     )
     assert body.get("address") == establishment_data.get("address")
     assert body.get("website") == establishment_data.get("website")
+
 
 @pytest.mark.django_db
 def test_get_establishment_distance_view(client, establishment):
@@ -84,8 +87,9 @@ def test_get_establishment_distance_view(client, establishment):
     assert len(results) == 1
     assert establishment.get("id") == 4
     assert establishment.get("name") == establishment_data.get("name")
-    assert Point(establishment.get("location").get("coordinates")).equals_identical(
-        establishment_data.get("location")
+    assert (
+        Point(establishment.get("location").get("coordinates")).coords
+        == establishment_data.get("location").coords
     )
     assert establishment.get("address") == establishment_data.get("address")
     assert establishment.get("website") == establishment_data.get("website")
