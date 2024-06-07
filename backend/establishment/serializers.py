@@ -1,9 +1,10 @@
-from rest_framework_gis import serializers as geoserializers
-from rest_framework import serializers
-from .models import Establishment, EstablishmentImage
-from rating.models import Rating
-from django.db.models import Avg
 from adaptation.serializers import AdaptationSerializer
+from django.db.models import Avg
+from rating.models import Rating
+from rest_framework import serializers
+from rest_framework_gis import serializers as geoserializers
+
+from .models import Establishment, EstablishmentImage
 
 
 class EstablishmentGeoSerializer(geoserializers.GeoFeatureModelSerializer):
@@ -26,9 +27,7 @@ class EstablishmentGeoSerializer(geoserializers.GeoFeatureModelSerializer):
         return 0
 
     def get_adaptations(self, establishment):
-        serializer = AdaptationSerializer(
-            establishment.adaptation, many=True
-        )
+        serializer = AdaptationSerializer(establishment.adaptation, many=True)
         return serializer.data
 
     class Meta:
@@ -71,9 +70,7 @@ class EstablishmentSerializer(serializers.ModelSerializer):
         return 0
 
     def get_adaptations(self, establishment):
-        serializer = AdaptationSerializer(
-            establishment.adaptation, many=True
-        )
+        serializer = AdaptationSerializer(establishment.adaptation, many=True)
         return serializer.data
 
     class Meta:

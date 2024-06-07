@@ -1,15 +1,16 @@
-from django.core.management.base import BaseCommand
+import os
+import random
+
 from adaptation.models import Adaptation
 from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand
 from django.db import transaction
-import random
-from user.factories import UserFactory
 from establishment.factories import EstablishmentFactory
+from establishment.models import Establishment, EstablishmentImage
 from rating.factories import RatingFactory
-from user.models import UserPic, UserAdaptations
-from establishment.models import EstablishmentImage, Establishment
 from rating.models import Rating, RatingImage
-import os
+from user.factories import UserFactory
+from user.models import UserAdaptations, UserPic
 
 
 class Command(BaseCommand):
@@ -159,7 +160,6 @@ class Command(BaseCommand):
                         ),
                         "rb",
                     ) as file:
-                        rating_image.url.save(f"{rating_image.pk}.{extension}", file
-                        )
+                        rating_image.url.save(f"{rating_image.pk}.{extension}", file)
 
         self.stdout.write("Ratings created")

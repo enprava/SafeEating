@@ -4,16 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('adaptation', '0002_adaptation_url'),
-        ('rating', '0001_initial'),
+        ("adaptation", "0002_adaptation_url"),
+        ("rating", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='rating',
-            name='adaptation',
-            field=models.ManyToManyField(blank=True, to='adaptation.adaptation'),
+            model_name="rating",
+            name="adaptation",
+            field=models.ManyToManyField(blank=True, to="adaptation.adaptation"),
         ),
     ]

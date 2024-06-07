@@ -5,15 +5,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('adaptation', '0001_initial'),
+        ("adaptation", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='adaptation',
-            name='url',
-            field=models.ImageField(null=True, upload_to=adaptation.models.Adaptation.upload_path),
+            model_name="adaptation",
+            name="url",
+            field=models.ImageField(
+                null=True, upload_to=adaptation.models.Adaptation.upload_path
+            ),
         ),
     ]

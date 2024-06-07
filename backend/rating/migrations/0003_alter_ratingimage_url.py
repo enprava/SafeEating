@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('rating', '0002_rating_adaptation'),
+        ("rating", "0002_rating_adaptation"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='ratingimage',
-            name='url',
+            model_name="ratingimage",
+            name="url",
             field=models.ImageField(upload_to=rating.models.RatingImage.upload_path),
         ),
     ]

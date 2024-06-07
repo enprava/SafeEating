@@ -1,8 +1,10 @@
 import factory
-from factory.django import DjangoModelFactory
-from .models import Rating
-from user.factories import UserFactory
 from establishment.factories import EstablishmentFactory
+from factory.django import DjangoModelFactory
+from user.factories import UserFactory
+
+from .models import Rating
+
 
 class RatingFactory(DjangoModelFactory):
     class Meta:

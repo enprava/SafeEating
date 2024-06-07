@@ -6,31 +6,63 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('establishment', '0001_initial'),
+        ("establishment", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Rating',
+            name="Rating",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('stars', models.IntegerField()),
-                ('body', models.CharField(max_length=300)),
-                ('establishment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='establishment.establishment')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("stars", models.IntegerField()),
+                ("body", models.CharField(max_length=300)),
+                (
+                    "establishment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="establishment.establishment",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='RatingImage',
+            name="RatingImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.ImageField(upload_to='rating-pics')),
-                ('rating', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='rating.rating')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("url", models.ImageField(upload_to="rating-pics")),
+                (
+                    "rating",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="rating.rating"
+                    ),
+                ),
             ],
         ),
     ]
