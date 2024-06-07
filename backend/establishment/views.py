@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework import permissions
 from django.contrib.gis.measure import Distance
 from django.contrib.gis.geos import Point
-from django.db.models import Q
 
 
 class EstablishmentMapView(generics.ListAPIView):
@@ -111,7 +110,7 @@ class EstablishmentImageUploadView(views.APIView):
         return Response(serializer.data)
 
 
-class UserRetrieveView(generics.RetrieveAPIView):
+class EstablishmentRetrieveView(generics.RetrieveAPIView):
     queryset = Establishment.objects.all()
     serializer_class = EstablishmentSerializer
     renderer_classes = [JSONRenderer]

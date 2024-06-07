@@ -1,4 +1,4 @@
-name: Tox
+name: Pytest
 
 on:
   pull_request:
@@ -40,7 +40,7 @@ jobs:
         run: sudo apt-get update
       - name: Install gdal library
         run: sudo apt-get install -y gdal-bin
-      - name: Install tox
-        run: pip install tox==4.12.1
-      - name: Run tox
-        run: tox
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+      - name: Run pytest
+        run: pytest .

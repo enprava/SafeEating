@@ -1,14 +1,20 @@
-from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import UserPic, UserAdaptations
+from django.db import models
+from rest_framework import serializers
+
+from .models import UserAdaptations, UserPic
+
 
 class UserSerializer(serializers.ModelSerializer):
     pic = serializers.SerializerMethodField()
     adaptations = serializers.SerializerMethodField()
-    
+
     def get_pic(self, user):
-        userpic, created = UserPic.objects.get_or_create(user=user)
-        serializer = UserPicSerializer(user.userpic)
+        try:
+            userpic = UserPic.objects.get(user=user)
+        except models.ObjectDoesNotExist:
+            userpic = None
+        serializer = UserPicSerializer(userpic)
         return serializer.data
 
     def get_adaptations(self, user):
@@ -19,23 +25,22 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
-        extra_kwargs = {'password': {'write_only': True}}
-    
+        extra_kwargs = {"password": {"write_only": True}}
+
     def create(self, validated_data):
-        user = User(
-            email=validated_data['email'],
-            username=validated_data['username']
-        )
-        user.set_password(validated_data['password'])
+        user = User(email=validated_data["email"], username=validated_data["username"])
+        user.set_password(validated_data["password"])
         user.save()
         return user
+
 
 class UserPicSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserPic
-        fields = ['url']
+        fields = ["url"]
+
 
 class UserAdaptationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAdaptations
-        fields = ["user","adaptations"]
+        fields = ["user", "adaptations"]

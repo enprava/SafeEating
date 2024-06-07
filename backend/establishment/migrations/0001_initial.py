@@ -7,31 +7,60 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('adaptation', '0001_initial'),
+        ("adaptation", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Establishment',
+            name="Establishment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('location', django.contrib.gis.db.models.fields.PointField(srid=4326)),
-                ('address', models.CharField(max_length=255)),
-                ('website', models.URLField()),
-                ('adaptation', models.ManyToManyField(blank=True, to='adaptation.adaptation')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("location", django.contrib.gis.db.models.fields.PointField(srid=4326)),
+                ("address", models.CharField(max_length=255)),
+                ("website", models.URLField()),
+                (
+                    "adaptation",
+                    models.ManyToManyField(blank=True, to="adaptation.adaptation"),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='EstablishmentImage',
+            name="EstablishmentImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.ImageField(upload_to=establishment.models.EstablishmentImage.upload_path)),
-                ('establishment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='establishment.establishment')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "url",
+                    models.ImageField(
+                        upload_to=establishment.models.EstablishmentImage.upload_path
+                    ),
+                ),
+                (
+                    "establishment",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="establishment.establishment",
+                    ),
+                ),
             ],
         ),
     ]

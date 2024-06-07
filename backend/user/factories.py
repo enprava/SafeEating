@@ -1,6 +1,7 @@
 import factory
-from factory.django import DjangoModelFactory
 from django.contrib.auth.models import User
+from factory.django import DjangoModelFactory
+
 
 class UserFactory(DjangoModelFactory):
     class Meta:
@@ -10,4 +11,3 @@ class UserFactory(DjangoModelFactory):
     last_name = factory.Faker("last_name")
     username = factory.Faker("email")
     email = username
-    
