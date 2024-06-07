@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db import models
 from rest_framework import serializers
 
 from .models import UserAdaptations, UserPic
@@ -9,7 +10,10 @@ class UserSerializer(serializers.ModelSerializer):
     adaptations = serializers.SerializerMethodField()
 
     def get_pic(self, user):
-        userpic, created = UserPic.objects.get_or_create(user=user)
+        try:
+            userpic = UserPic.objects.get(user=user)
+        except models.ObjectDoesNotExist:
+            userpic = None
         serializer = UserPicSerializer(userpic)
         return serializer.data
 
