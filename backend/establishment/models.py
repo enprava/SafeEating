@@ -16,10 +16,10 @@ class Establishment(models.Model):
 
 
 class EstablishmentImage(models.Model):
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE)
+    establishment = models.ManyToManyField(Establishment)
 
     def upload_path(self, filename):
-        return os.path.join("establishment-pics", str(self.establishment.pk), filename)
+        return os.path.join("establishment-pics", filename)
 
     url = models.ImageField(upload_to=upload_path)
 

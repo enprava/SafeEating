@@ -6,10 +6,10 @@ from django.db import models
 
 
 class UserPic(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    user = models.ManyToManyField(User)
 
     def upload_path(self, filename):
-        return os.path.join("user-pics", str(self.user.pk), filename)
+        return os.path.join("user-pics", filename)
 
     url = models.ImageField(upload_to=upload_path, null=True)
 

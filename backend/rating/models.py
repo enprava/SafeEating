@@ -19,10 +19,10 @@ class Rating(models.Model):
 
 class RatingImage(models.Model):
     def upload_path(self, filename):
-        return os.path.join("rating-pics", str(self.rating.pk), filename)
+        return os.path.join("rating-pics", filename)
 
     url = models.ImageField(upload_to=upload_path)
-    rating = models.ForeignKey(Rating, on_delete=models.CASCADE)
+    rating = models.ManyToManyField(Rating)
 
     def __str__(self):
-        return f"{self.pk} {self.rating.user}"
+        return f"{self.pk} {self.url.name}"
