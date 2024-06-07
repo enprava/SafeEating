@@ -1,5 +1,4 @@
 -r requirements.txt
 
-tox==4.12.1
 ruff==0.1.14
 pytest-django==4.7.0
